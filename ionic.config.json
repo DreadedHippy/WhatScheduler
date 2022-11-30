@@ -1,0 +1,7 @@
+{
+  "name": "WhatScheduler2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
