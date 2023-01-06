@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  title = 'Home'
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onClick(){
+    console.log('Sent!')
   }
 
 }
