@@ -12,19 +12,21 @@ export class HomePage implements OnInit {
 
   constructor( private msgSrv: MessagingService) { }
   message = new FormControl('', Validators.required)
+  frequency = new FormControl('')
 
   ngOnInit() {
   }
 
   onClick(){
-    if(!this.message.valid || !this.message.value){
+    if(!this.message.value){
       console.log('Enter a message');
       return
     }
 
-    let msgObj = {message: this.message.value}
-    console.log('Sent!', msgObj.message)
+    let msgObj = {message: this.message.value, frequency: this.frequency.value}
+    console.log('Sent!', msgObj)
     this.message.reset()
+    this.frequency.reset()
     this.msgSrv.sendMessage(msgObj)
 }
 

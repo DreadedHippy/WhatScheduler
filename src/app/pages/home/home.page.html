@@ -9,6 +9,14 @@
           </ion-item>
         </ion-col>
         <ion-col size="auto">
+          <ion-item>
+            <ion-select placeholder="Frequency" [formControl]="frequency" interface="popover">
+              <ion-select-option value="*/20 * * * * *">Every 20 seconds</ion-select-option>
+              <ion-select-option value="*/30 * * * * *">Every 30 seconds</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="auto">
           <ion-button (click)="onClick()" color="accent">
             <ion-icon slot="end" name="paper-plane"></ion-icon>
             SEND

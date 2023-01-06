@@ -12,7 +12,7 @@ export class MessagingService {
 
   constructor( private http: HttpClient) { }
 
-  sendMessage(obj: {message: string}){
+  sendMessage(obj: {message: string, frequency: string | null}){
     const url = this.baseUrl+'simplesend';
 
     this.http.post(url, obj).subscribe(response => {
