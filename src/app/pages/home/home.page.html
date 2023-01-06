@@ -5,11 +5,11 @@
       <ion-row>
         <ion-col size="auto">
           <ion-item fill="outline">
-            <ion-input type="text" placeholder="Enter a message."></ion-input>
+            <ion-input [formControl]="message" type="text" placeholder="Enter a message."></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="auto">
-          <ion-button (click)="onClick()">
+          <ion-button (click)="onClick()" color="accent">
             <ion-icon slot="end" name="paper-plane"></ion-icon>
             SEND
           </ion-button>
