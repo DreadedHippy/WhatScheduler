@@ -3,12 +3,18 @@
   <div id="container">
     <ion-grid fixed>
       <ion-row>
-        <ion-col size="auto">
+        <ion-col size="12">
           <ion-item fill="outline">
-            <ion-input [formControl]="message" type="text" placeholder="Enter a message."></ion-input>
+            <ion-textarea
+            [formControl]="message"
+            type="text"
+            placeholder="Enter a message."
+            rows="6"
+            >
+            </ion-textarea>
           </ion-item>
         </ion-col>
-        <ion-col size="auto">
+        <!-- <ion-col size="auto">
           <ion-item>
             <ion-select placeholder="Frequency" [formControl]="frequency" interface="popover">
               <ion-select-option value="*/20 * * * * *">Every 20 seconds</ion-select-option>
@@ -21,8 +27,62 @@
             <ion-icon slot="end" name="paper-plane"></ion-icon>
             SEND
           </ion-button>
+        </ion-col> -->
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label>Message send type</ion-label>
+            <ion-select value="instant" placeholder="Select one" interface="popover">
+              <ion-select-option value="instant">Send instantly</ion-select-option>
+              <ion-select-option value="interval">Send at regular intervals</ion-select-option>
+              <ion-select-option value="moment">Send at a date</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
       </ion-row>
+      <div class="box" id="interval">
+        <ion-row>
+          <ion-col size="4">
+            Interval
+          </ion-col>
+          <ion-col size="4">Frequency</ion-col>
+          <ion-col size="4">Timespan</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">Every</ion-col>
+          <ion-col size="4">
+            <ion-item>
+              <ion-input type="number" placeholder="Enter a number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4">
+            <ion-item>
+              <ion-select value="seconds" multiple="true" placeholder="Select Span">
+                <ion-select-option value="seconds">Seconds</ion-select-option>
+                <ion-select-option value="minutes">Minute</ion-select-option>
+                <ion-select-option value="hours">Hours</ion-select-option>
+                <ion-select-option value="days">Days</ion-select-option>
+                <ion-select-option value="weeks">Weeks</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button (click)="onClick()" color="accent" expand="block">
+              Send
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div id="moment" class="box">
+        <ion-datetime
+          [value]="date"
+          [min]="date"
+          style="margin: 3px auto;"
+        ></ion-datetime>
+      </div>
     </ion-grid>
   </div>
 

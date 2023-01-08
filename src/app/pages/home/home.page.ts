@@ -13,10 +13,10 @@ export class HomePage implements OnInit {
   constructor( private msgSrv: MessagingService) { }
   message = new FormControl('', Validators.required)
   frequency = new FormControl('')
+  date = (new Date()).toISOString()
 
   ngOnInit() {
   }
-
   onClick(){
     if(!this.message.value){
       console.log('Enter a message');
