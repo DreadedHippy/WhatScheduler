@@ -17,6 +17,11 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
   }
+
+  getYears(date: string){
+    return([(new Date(date)).getFullYear(), (Number((new Date(date)).getFullYear()) + 1).toString()])
+  }
+
   onClick(){
     if(!this.message.value){
       console.log('Enter a message');
@@ -28,6 +33,6 @@ export class HomePage implements OnInit {
     this.message.reset()
     this.frequency.reset()
     this.msgSrv.sendMessage(msgObj)
-}
+  }
 
 }
