@@ -1,6 +1,8 @@
+import { Message } from './../interfaces/message';
 import { environment } from './../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +14,9 @@ export class MessagingService {
 
   constructor( private http: HttpClient) { }
 
-  sendMessage(obj: {message: string, frequency: string | null}){
+  sendMessage(obj: Message){
     const url = this.baseUrl+'simplesend';
-
-    this.http.post(url, obj).subscribe(response => {
-      console.log(response)
-      return response
-    })
+    return this.http.post(url, obj)
   }
 
 }

@@ -1,12 +1,11 @@
 <app-header [title]="title"></app-header>
 <ion-content [fullscreen]="true">
   <div id="container">
-    <ion-grid fixed>
+    <ion-grid fixed [formGroup]="form">
       <ion-row>
         <ion-col size="12">
           <ion-item fill="outline">
-            <ion-textarea
-            [formControl]="message"
+            <ion-textarea formControlName="message"
             type="text"
             placeholder="Enter a message."
             rows="6"
@@ -33,57 +32,24 @@
         <ion-col size="12">
           <ion-item>
             <ion-label>Message send type</ion-label>
-            <ion-select value="instant" placeholder="Select one" interface="popover">
-              <ion-select-option value="instant">Send instantly</ion-select-option>
-              <ion-select-option value="interval">Send at regular intervals</ion-select-option>
-              <ion-select-option value="moment">Send at a date</ion-select-option>
+            <ion-select placeholder="Select one" interface="popover" formControlName="isMessageInstant">
+              <ion-select-option [value]="true">Send instantly</ion-select-option>
+              <ion-select-option [value]="false">Schedule message</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
       </ion-row>
-      <div class="box" id="interval">
-        <ion-row>
-          <ion-col size="4">
-            Interval
-          </ion-col>
-          <ion-col size="4">Frequency</ion-col>
-          <ion-col size="4">Timespan</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="4">Every</ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-input type="number" placeholder="Enter a number"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-select value="seconds" multiple="true" placeholder="Select Span">
-                <ion-select-option value="seconds">Seconds</ion-select-option>
-                <ion-select-option value="minutes">Minute</ion-select-option>
-                <ion-select-option value="hours">Hours</ion-select-option>
-                <ion-select-option value="days">Days</ion-select-option>
-                <ion-select-option value="weeks">Weeks</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <ion-button (click)="onClick()" color="accent" expand="block">
-              Send
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </div>
-      <div id="moment" class="box">
-        <ion-datetime
+      <div id="moment" class="box" [hidden]="form.get('isMessageInstant')?.value">
+        <ion-datetime formControlName="date"
           [value]="date"
           [min]="date"
           style="margin: 3px auto;"
           [yearValues]="getYears(date)"
         ></ion-datetime>
       </div>
+      <ion-button (click)="onClick()" color="accent" expand="block" [disabled]="isButtonDisabled">
+        Send
+      </ion-button>
     </ion-grid>
   </div>
 

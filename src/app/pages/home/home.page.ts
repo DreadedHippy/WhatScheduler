@@ -1,6 +1,7 @@
+import { Message } from './../../interfaces/message';
 import { MessagingService } from './../../services/messaging.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +10,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class HomePage implements OnInit {
   title = 'Home'
+  isButtonDisabled = false;
+  date = (new Date()).toISOString()
+
+  form: FormGroup = new FormGroup({
+    message: new FormControl('', Validators.required),
+    isMessageInstant: new FormControl(true, Validators.required),
+    date: new FormControl(this.date)
+  })
+
 
   constructor( private msgSrv: MessagingService) { }
-  message = new FormControl('', Validators.required)
-  frequency = new FormControl('')
-  date = (new Date()).toISOString()
 
   ngOnInit() {
   }
@@ -22,17 +29,38 @@ export class HomePage implements OnInit {
     return([(new Date(date)).getFullYear(), (Number((new Date(date)).getFullYear()) + 1).toString()])
   }
 
-  onClick(){
-    if(!this.message.value){
+  disableForm(){
+    this.isButtonDisabled = true
+    this.form.disable()
+  }
+
+  async onClick(){
+    if(!this.form.valid){
       console.log('Enter a message');
       return
     }
 
-    let msgObj = {message: this.message.value, frequency: this.frequency.value}
-    console.log('Sent!', msgObj)
-    this.message.reset()
-    this.frequency.reset()
-    this.msgSrv.sendMessage(msgObj)
+    const message = this.form.get('message')?.value,
+      isMessageInstant = this.form.get('isMessageInstant')?.value,
+      date = this.form.get('date')?.value
+    ;
+    // await this.disableForm()
+
+    if(isMessageInstant){
+      const msgObj: Message = {content: message, isInstant: true, date: undefined}
+      this.msgSrv.sendMessage(msgObj).subscribe({
+        next: (response) => {console.log(response)},
+        error: (err) => {console.log(err)}
+      })
+    } else{
+      const msgObj: Message = {content: message, isInstant: false, date: date}
+      this.msgSrv.sendMessage(msgObj).subscribe({
+        next: (response) => {console.log(response)},
+        error: (err) => {console.log(err)}
+      })
+
+    }
+    this.form.reset()
   }
 
 }
