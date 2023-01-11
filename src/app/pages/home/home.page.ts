@@ -29,9 +29,15 @@ export class HomePage implements OnInit {
     return([(new Date(date)).getFullYear(), (Number((new Date(date)).getFullYear()) + 1).toString()])
   }
 
-  disableForm(){
-    this.isButtonDisabled = true
-    this.form.disable()
+  setFormEnabled(state: boolean){
+    if(state == true){
+      this.isButtonDisabled = false
+      this.form.enable()
+    }
+    if(state == false){
+      this.isButtonDisabled = true
+      this.form.disable()
+    }
   }
 
   async onClick(){
@@ -40,25 +46,44 @@ export class HomePage implements OnInit {
       return
     }
 
-    const message = this.form.get('message')?.value,
-      isMessageInstant = this.form.get('isMessageInstant')?.value,
-      date = this.form.get('date')?.value
-    ;
-    // await this.disableForm()
+    const message = this.form.get('message')?.value
+    const isMessageInstant = this.form.get('isMessageInstant')?.value
+    const date = this.form.get('date')?.value
+    const compareDate1 = new Date(date)
+    const compareDate2 = new Date(Date.now())
+
+    if(compareDate2.getTime() > (compareDate1.getTime() + 60000)){
+      console.log('You cannot schedule less than one minute ahead');
+      return
+    }
+
+    await this.setFormEnabled(false)
 
     if(isMessageInstant){
       const msgObj: Message = {content: message, isInstant: true, date: undefined}
       this.msgSrv.sendMessage(msgObj).subscribe({
-        next: (response) => {console.log(response)},
-        error: (err) => {console.log(err)}
+        next: (response) => {
+          console.log(response)
+          this.setFormEnabled(true)
+        },
+        error: (err) => {
+          console.log(err)
+          this.setFormEnabled(true)
+        }
       })
-    } else{
+    }
+    if(!isMessageInstant){
       const msgObj: Message = {content: message, isInstant: false, date: date}
       this.msgSrv.sendMessage(msgObj).subscribe({
-        next: (response) => {console.log(response)},
-        error: (err) => {console.log(err)}
+        next: (response) => {
+          console.log(response)
+          this.setFormEnabled(true)
+        },
+        error: (err) => {
+          console.log(err)
+          this.setFormEnabled(true)
+        }
       })
-
     }
     this.form.reset()
   }
