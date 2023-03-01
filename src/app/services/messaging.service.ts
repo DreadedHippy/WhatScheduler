@@ -19,4 +19,16 @@ export class MessagingService {
     return this.http.post(url, obj)
   }
 
+  connectClient(){
+    const email = localStorage.getItem("email")
+    const url = this.baseUrl + `client/connnect?clientID=${email}`
+    this.http.get(url).subscribe({
+      next: (result) => {console.log(result)},
+      error: (error) => {console.log(error)}
+    })
+    return new Promise((resolve) => {
+      resolve(true)
+    })
+  }
+
 }

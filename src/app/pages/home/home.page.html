@@ -1,56 +1,9 @@
 <app-header [title]="title"></app-header>
-<ion-content [fullscreen]="true">
-  <div id="container">
-    <ion-grid fixed [formGroup]="form">
-      <ion-row>
-        <ion-col size="12">
-          <ion-item fill="outline">
-            <ion-textarea formControlName="message"
-            type="text"
-            placeholder="Enter a message."
-            rows="6"
-            >
-            </ion-textarea>
-          </ion-item>
-        </ion-col>
-        <!-- <ion-col size="auto">
-          <ion-item>
-            <ion-select placeholder="Frequency" [formControl]="frequency" interface="popover">
-              <ion-select-option value="*/20 * * * * *">Every 20 seconds</ion-select-option>
-              <ion-select-option value="*/30 * * * * *">Every 30 seconds</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col size="auto">
-          <ion-button (click)="onClick()" color="accent">
-            <ion-icon slot="end" name="paper-plane"></ion-icon>
-            SEND
-          </ion-button>
-        </ion-col> -->
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-item>
-            <ion-label>Message send type</ion-label>
-            <ion-select placeholder="Select one" interface="popover" formControlName="isMessageInstant">
-              <ion-select-option [value]="true">Send instantly</ion-select-option>
-              <ion-select-option [value]="false">Schedule message</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <div id="moment" class="box" [hidden]="form.get('isMessageInstant')?.value">
-        <ion-datetime formControlName="date"
-          [value]="date"
-          [min]="date"
-          style="margin: 3px auto;"
-          [yearValues]="getYears(date)"
-        ></ion-datetime>
-      </div>
-      <ion-button (click)="onClick()" color="accent" expand="block" [disabled]="isButtonDisabled">
-        Send
-      </ion-button>
-    </ion-grid>
-  </div>
 
+<ion-content [fullscreen]="true">
+  <div class="centered">
+    <ion-button (click)="onClick()" expand="block" fill="outline" shape="round">
+      Connect WhatsApp
+    </ion-button>
+  </div>
 </ion-content>
