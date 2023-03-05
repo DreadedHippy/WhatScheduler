@@ -23,10 +23,14 @@ export class HomePage implements OnInit {
   constructor( private msgSrv: MessagingService) { }
 
   ngOnInit() {
+    this.msgSrv.onQrCode().subscribe( code => {
+      console.log("QRLink:", code)
+    })
   }
 
   onClick(){
     console.log("Clicked!")
+    // this.msgSrv.pingSocket()
     this.msgSrv.connectClient().then( result => {
       console.log(result)
     })
