@@ -1,0 +1,23 @@
+<app-header [title]="title"></app-header>
+<ion-content>
+  <div class="flex-toolbar">
+    <ion-searchbar
+      placeholder="Search schedules"
+      inputmode="search"
+      type="text"
+      (ionChange)="onSearchChange($event)"
+      [debounce]="250"
+      showClearButton="always"
+      [animated]="true"
+    ></ion-searchbar>
+    <ion-button (click)="addSchedule()" expand="block">
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div class="no-schedule">
+    <ion-text color="primary">
+      <h2>No schedules found, add one with the "+" button above</h2>
+    </ion-text>
+  </div>
+</ion-content>

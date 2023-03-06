@@ -23,6 +23,9 @@ export class AuthService {
       },
       error: (error) => {console.log(error)}
     })
+  }
 
+  getToken(){
+    return localStorage.getItem("token")
   }
 }

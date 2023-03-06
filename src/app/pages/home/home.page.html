@@ -1,9 +1,14 @@
-<app-header [title]="title"></app-header>
+<app-header [title]="title" [isBackBtnHidden]="true"></app-header>
 
 <ion-content [fullscreen]="true">
   <div class="centered">
-    <ion-button (click)="onClick()" expand="block" fill="outline" shape="round">
-      Connect WhatsApp
+    <ion-button (click)="onConnect()" expand="block" fill="outline" shape="round" [disabled]="isButtonDisabled">
+      <ion-text *ngIf="!isClientLoading">Connect</ion-text>
+      <ion-spinner name="crescent" *ngIf="isClientLoading" color="tertiary"></ion-spinner>
     </ion-button>
+    <div *ngIf="isQRCodeReceived">
+      <qrcode [qrdata]="clientQRCode"></qrcode>
+      <p>Using Whatsapp, Scan the QRCode above to connect to the WhatScheduler client</p>
+    </div>
   </div>
 </ion-content>

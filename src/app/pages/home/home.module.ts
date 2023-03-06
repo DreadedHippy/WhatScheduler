@@ -1,3 +1,4 @@
+import { QRCodeModule } from 'angularx-qrcode';
 import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,7 +18,8 @@ import { HomePage } from './home.page';
     HomePageRoutingModule,
     ComponentsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    QRCodeModule
   ],
   declarations: [HomePage]
 })

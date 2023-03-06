@@ -16,6 +16,14 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'schedule',
+    loadChildren: () => import('./pages/schedule/schedule.module').then( m => m.SchedulePageModule)
+  },
+  {
+    path: 'recurring',
+    loadChildren: () => import('./pages/recurring/recurring.module').then( m => m.RecurringPageModule)
   }
 ];
 

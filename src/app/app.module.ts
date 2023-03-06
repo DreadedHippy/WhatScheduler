@@ -1,3 +1,4 @@
+import { AuthInterceptor } from './services/auth-interceptor';
 import { FormsModule } from '@angular/forms';
 import { environment } from './../environments/environment.prod';
 import { NgModule } from '@angular/core';
@@ -9,7 +10,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const config: SocketIoConfig = { url: environment.baseSocketUrl, options: {} };
 @NgModule({
@@ -22,7 +24,10 @@ const config: SocketIoConfig = { url: environment.baseSocketUrl, options: {} };
     FormsModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

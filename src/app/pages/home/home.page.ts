@@ -12,6 +12,9 @@ export class HomePage implements OnInit {
   title = 'Home'
   isButtonDisabled = false;
   date = (new Date()).toISOString()
+  clientQRCode : any = "";
+  isQRCodeReceived = false;
+  isClientLoading = false;
 
   form: FormGroup = new FormGroup({
     message: new FormControl('', Validators.required),
@@ -24,14 +27,18 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.msgSrv.onQrCode().subscribe( code => {
-      console.log("QRLink:", code)
+      this.isQRCodeReceived = true
+      this.clientQRCode = code
+      console.log({clientQR: this.clientQRCode})
+      this.isClientLoading = false
     })
   }
 
-  onClick(){
-    console.log("Clicked!")
+  onConnect(){
+    this.isButtonDisabled = true
+    this.isClientLoading = true
     // this.msgSrv.pingSocket()
-    this.msgSrv.connectClient().then( result => {
+    this.msgSrv.connectClient().then( (result) => {
       console.log(result)
     })
   }

@@ -1,0 +1,15 @@
+div.flex-toolbar{
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+div.no-schedule{
+  text-align: center;
+  ion-text{
+    font-size: 16rem;
+  }
+  margin: 4em auto;
+}
