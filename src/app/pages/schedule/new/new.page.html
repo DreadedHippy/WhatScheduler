@@ -1,4 +1,75 @@
 <app-header [title]="title"></app-header>
-<ion-content>
 
+<ion-content>
+  <ion-card class="message-card">
+    <ion-card-content>
+      <form [formGroup]="messageForm" (ngSubmit)="onMessageSubmit()">
+        <ion-item-group>
+          <div class="flex">
+            <ion-icon name="chatbubble-ellipses-outline" class="title-icon" color="primary"></ion-icon>
+            <ion-text color="primary">
+              <h1>Send a message</h1>
+            </ion-text>
+          </div>
+          <div class="container">
+            <ion-item lines="none">
+              <ion-label>Select chat</ion-label>
+              <ion-select placeholder="Select chat" formControlName="chat">
+                <ion-select-option *ngFor="let chat of clientChats" [value]="chat.id._serialized">{{chat.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item fill="outline" style="margin-top: 1em;">
+              <ion-textarea rows="8" enterkeyhint="send" autocapitalize="sentences" class="message-textarea" [autoGrow]="true" placeholder="Message" formControlName="message"></ion-textarea>
+            </ion-item>
+          </div>
+
+          <ion-item-divider>
+            <ion-label>Type</ion-label>
+          </ion-item-divider>
+
+          <div class="container">
+            <ion-list lines="none">
+              <ion-radio-group formControlName="isInstant">
+                <ion-grid fixed>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-item>
+                        <ion-label>Instant</ion-label>
+                        <ion-radio slot="end" [value]="true"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-item>
+                        <ion-label>Scheduled</ion-label>
+                        <ion-radio slot="end" [value]="false"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-radio-group>
+            </ion-list>
+          </div>
+          <div [hidden]="messageForm.value.isInstant === true">
+            <ion-item-divider>
+              <ion-label>Date</ion-label>
+            </ion-item-divider>
+            <div class="container">
+              <ion-item class="date-item">
+                <ion-datetime-button datetime="datetime"></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime id="datetime" formControlName="date"></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+              </ion-item>
+            </div>
+          </div>
+
+          <ion-button block color="primary" type="submit" [disabled]="messageForm.invalid">
+            Submit
+          </ion-button>
+        </ion-item-group>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

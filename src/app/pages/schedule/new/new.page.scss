@@ -1,0 +1,44 @@
+.message-card{
+  margin: 1em auto;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.flex{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+ion-icon.title-icon{
+  font-size: 2em;
+  margin-right: 1em;
+}
+
+.container{
+  border: 1px solid rgb(196, 196, 196);
+  border-radius: 4px;
+  margin-top: 1em;
+  overflow: hidden;
+  padding: 0.5em;
+}
+
+ion-textarea.message-textarea {
+  --padding-bottom: 1px;
+  --padding-end: 1px;
+  --padding-start: 1px;
+  --padding-top: 1px;
+}
+
+ion-item.date-item {
+  --background-hover-opacity: 0;
+  --highlight-color-focused: #ffffff00;
+  --highlight-color-invalid: #ffffff00;
+  --highlight-color-valid: #ffffff00;
+  --ripple-color: #ffffff00;
+  --transition: none;
+  --background-focused: #ffffff00;
+}

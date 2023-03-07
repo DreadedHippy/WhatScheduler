@@ -1,3 +1,4 @@
+import { SubSink } from 'subsink';
 import { Observable, Subject } from 'rxjs';
 import { Message } from './../interfaces/message';
 import { environment } from './../../environments/environment.prod';
@@ -12,7 +13,9 @@ import { Socket } from 'ngx-socket-io';
 
 export class MessagingService{
   baseUrl = environment.baseUrl;
+  clientChats: any[] = [];
   private isClientReady = new Subject<boolean>()
+  private subs = new SubSink();
 
   constructor( private http: HttpClient, private socket: Socket) { }
 
@@ -46,12 +49,22 @@ export class MessagingService{
   }
 
   getClientChats(){
-    const email = localStorage.getItem("email")
-    return this.http.get<{
-      message: string,
-      data: {chats: any[]},
-      code: string
-    }>(environment.baseUrl + "client/chats?email="+email)
+    return new Promise<any[]>((resolve, reject) => {
+      const email = localStorage.getItem("email")
+      this.subs.sink = this.http.get<{
+        message: string,
+        data: {chats: any[]},
+        code: string
+      }>(environment.baseUrl + "client/chats?email="+email).subscribe({
+        next: (result) => {
+          console.log(result)
+          this.clientChats = result.data.chats
+          resolve(this.clientChats)
+        },
+        error: (error) => {console.error(error)},
+        complete: () => { this.subs.unsubscribe()}
+      })
+    })
   }
 
 }

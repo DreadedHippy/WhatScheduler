@@ -32,6 +32,12 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     const events = this.msgSrv.onSocketEvents()
+    if(this.msgSrv.clientChats.length > 0){
+      this.isClientLoading = false
+      this.isClientReady = true
+      this.clientChats = this.msgSrv.clientChats
+      return
+    }
     this.subs.sink = events.qrcode.subscribe( (code: any) => {
       this.isQRCodeReceived = true
       this.clientQRCode = code
@@ -56,11 +62,8 @@ export class HomePage implements OnInit {
   }
 
   getChats(){
-    this.msgSrv.getClientChats().subscribe({
-      next: (result) => {
-        console.log(result)
-        this.clientChats = result.data.chats
-      }
+    this.msgSrv.getClientChats().then( result => {
+      this.clientChats = result
     })
   }
 
