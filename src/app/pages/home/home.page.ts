@@ -1,3 +1,4 @@
+import { SubSink } from 'subsink';
 import { Message } from './../../interfaces/message';
 import { MessagingService } from './../../services/messaging.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,12 +10,16 @@ import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+
   title = 'Home'
   isButtonDisabled = false;
   date = (new Date()).toISOString()
   clientQRCode : any = "";
   isQRCodeReceived = false;
   isClientLoading = false;
+  isClientReady = false;
+  clientChats: any[] = [];
+  private subs = new SubSink
 
   form: FormGroup = new FormGroup({
     message: new FormControl('', Validators.required),
@@ -26,11 +31,20 @@ export class HomePage implements OnInit {
   constructor( private msgSrv: MessagingService) { }
 
   ngOnInit() {
-    this.msgSrv.onQrCode().subscribe( code => {
+    const events = this.msgSrv.onSocketEvents()
+    this.subs.sink = events.qrcode.subscribe( (code: any) => {
       this.isQRCodeReceived = true
       this.clientQRCode = code
       console.log({clientQR: this.clientQRCode})
       this.isClientLoading = false
+    })
+
+    this.subs.sink = events.ready.subscribe({
+      next: () => {
+        this.isClientReady = true;
+        this.getChats()
+      },
+      complete: () => {this.subs.unsubscribe}
     })
   }
 
@@ -38,8 +52,15 @@ export class HomePage implements OnInit {
     this.isButtonDisabled = true
     this.isClientLoading = true
     // this.msgSrv.pingSocket()
-    this.msgSrv.connectClient().then( (result) => {
-      console.log(result)
+    this.msgSrv.connectClient();
+  }
+
+  getChats(){
+    this.msgSrv.getClientChats().subscribe({
+      next: (result) => {
+        console.log(result)
+        this.clientChats = result.data.chats
+      }
     })
   }
 

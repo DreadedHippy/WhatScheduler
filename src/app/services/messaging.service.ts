@@ -1,3 +1,4 @@
+import { Observable, Subject } from 'rxjs';
 import { Message } from './../interfaces/message';
 import { environment } from './../../environments/environment.prod';
 import { Injectable, OnInit } from '@angular/core';
@@ -10,7 +11,8 @@ import { Socket } from 'ngx-socket-io';
 
 
 export class MessagingService{
-  baseUrl = environment.baseUrl
+  baseUrl = environment.baseUrl;
+  private isClientReady = new Subject<boolean>()
 
   constructor( private http: HttpClient, private socket: Socket) { }
 
@@ -23,20 +25,33 @@ export class MessagingService{
     this.socket.emit("connect_client")
   }
 
-  onQrCode(){
-    return this.socket.fromEvent("qrcode")
+  onSocketEvents(){
+    return  {
+      qrcode: this.socket.fromEvent("qrcode"),
+      ready: this.socket.fromEvent("client_ready")
+    }
   }
 
   connectClient(){
     const email = localStorage.getItem("email")
-    const url = this.baseUrl + `client/connect?clientID=${email}`
-    this.http.get(url).subscribe({
-      next: (result) => {console.log(result)},
-      error: (error) => {console.log(error)}
-    })
-    return new Promise((resolve) => {
-      resolve(true)
-    })
+    this.socket.emit("connect_client", email)
+    // const url = this.baseUrl + `client/connect?clientID=${email}`
+    // this.http.get(url).subscribe({
+    //   next: (result) => {console.log(result)},
+    //   error: (error) => {console.log(error)}
+    // })
+    // return new Promise((resolve) => {
+    //   resolve(true)
+    // })
+  }
+
+  getClientChats(){
+    const email = localStorage.getItem("email")
+    return this.http.get<{
+      message: string,
+      data: {chats: any[]},
+      code: string
+    }>(environment.baseUrl + "client/chats?email="+email)
   }
 
 }

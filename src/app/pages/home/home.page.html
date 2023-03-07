@@ -1,7 +1,7 @@
 <app-header [title]="title" [isBackBtnHidden]="true"></app-header>
 
 <ion-content [fullscreen]="true">
-  <div class="centered">
+  <div class="centered" *ngIf="!isClientReady">
     <ion-button (click)="onConnect()" expand="block" fill="outline" shape="round" [disabled]="isButtonDisabled">
       <ion-text *ngIf="!isClientLoading">Connect</ion-text>
       <ion-spinner name="crescent" *ngIf="isClientLoading" color="tertiary"></ion-spinner>
@@ -11,4 +11,23 @@
       <p>Using Whatsapp, Scan the QRCode above to connect to the WhatScheduler client</p>
     </div>
   </div>
+
+  <div class="centered" *ngIf="isClientReady">
+    <ion-icon class="ready-icon" name="checkmark-circle-outline" color="success" size="large"></ion-icon>
+    <p>Client Ready! Retrieving chats...</p>
+  </div>
+
+  <ion-list *ngIf="clientChats.length > 0">
+    <ion-list-header class="chat-list-header">
+      <h2>Your Chats</h2>
+    </ion-list-header>
+    <ion-item *ngFor="let chat of clientChats; index as i" [color]="chat.isGroup ? 'secondary' : 'light' ">
+     <ion-label>
+      <ion-chip color="primary">
+        <ion-label>{{i}}</ion-label>
+      </ion-chip>
+      {{chat.name}}
+    </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
