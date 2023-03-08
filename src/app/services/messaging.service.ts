@@ -38,6 +38,12 @@ export class MessagingService{
   connectClient(){
     const email = localStorage.getItem("email")
     this.socket.emit("connect_client", email)
+
+    this.subs.sink = this.onSocketEvents().ready.subscribe({
+      next: () => {this.isClientReady.next(true)},
+      error: () => {this.isClientReady.next(false)},
+      complete: () => {this.subs.unsubscribe}
+    })
     // const url = this.baseUrl + `client/connect?clientID=${email}`
     // this.http.get(url).subscribe({
     //   next: (result) => {console.log(result)},
@@ -59,12 +65,17 @@ export class MessagingService{
         next: (result) => {
           console.log(result)
           this.clientChats = result.data.chats
+          this.isClientReady.next(true)
           resolve(this.clientChats)
         },
         error: (error) => {console.error(error)},
         complete: () => { this.subs.unsubscribe()}
       })
     })
+  }
+
+  getClientState(){
+    return this.isClientReady.asObservable()
   }
 
 }

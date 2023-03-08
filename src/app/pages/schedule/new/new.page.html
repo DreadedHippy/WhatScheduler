@@ -12,7 +12,7 @@
             </ion-text>
           </div>
           <div class="container">
-            <ion-item lines="none">
+            <ion-item lines="full">
               <ion-label>Select chat</ion-label>
               <ion-select placeholder="Select chat" formControlName="chat">
                 <ion-select-option *ngFor="let chat of clientChats" [value]="chat.id._serialized">{{chat.name}}</ion-select-option>
@@ -58,7 +58,7 @@
                 <ion-datetime-button datetime="datetime"></ion-datetime-button>
                 <ion-modal [keepContentsMounted]="true">
                   <ng-template>
-                    <ion-datetime id="datetime" formControlName="date"></ion-datetime>
+                    <ion-datetime [min]="minDate" id="datetime" formControlName="date"></ion-datetime>
                   </ng-template>
                 </ion-modal>
               </ion-item>

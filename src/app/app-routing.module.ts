@@ -1,3 +1,4 @@
+import { ClientGuard } from './guards/client.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
@@ -19,11 +20,13 @@ const routes: Routes = [
   },
   {
     path: 'schedule',
-    loadChildren: () => import('./pages/schedule/schedule.module').then( m => m.SchedulePageModule)
+    loadChildren: () => import('./pages/schedule/schedule.module').then( m => m.SchedulePageModule),
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: 'recurring',
-    loadChildren: () => import('./pages/recurring/recurring.module').then( m => m.RecurringPageModule)
+    loadChildren: () => import('./pages/recurring/recurring.module').then( m => m.RecurringPageModule),
+    canActivate: [AuthGuard, ClientGuard]
   }
 ];
 
