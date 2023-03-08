@@ -21,7 +21,11 @@ export class MessagingService{
   constructor( private http: HttpClient, private socket: Socket) { }
 
   sendMessage(obj: Message){
-    const url = this.baseUrl+'simplesend';
+    const email = localStorage.getItem("email")
+    let url = this.baseUrl+'client/send?email='+email;
+    if(!obj.isInstant){
+      url = this.baseUrl+'schedules/create?email='+email;
+    }
     return this.http.post(url, obj)
   }
 

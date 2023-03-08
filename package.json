@@ -26,6 +26,7 @@
     "@capacitor/status-bar": "4.1.0",
     "@ionic/angular": "^6.1.9",
     "angularx-qrcode": "^15.0.1",
+    "ionic-selectable": "^4.9.0",
     "ionicons": "^6.0.3",
     "moment": "^2.29.4",
     "ngx-socket-io": "^4.4.0",

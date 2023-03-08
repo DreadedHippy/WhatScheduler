@@ -1,5 +1,6 @@
 export interface Message {
-  content: string,
-  isInstant: boolean,
-  date: Date | undefined
+  chatIDs: string[] | null | undefined;
+  message: string| null | undefined;
+  isInstant: boolean | null | undefined;
+  date: Date | string | undefined | null | undefined;
 }

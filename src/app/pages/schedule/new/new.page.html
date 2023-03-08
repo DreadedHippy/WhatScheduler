@@ -11,10 +11,22 @@
               <h1>Send a message</h1>
             </ion-text>
           </div>
+
+          <!-- <div class="chat-list">
+            <ion-searchbar placeholder="Search chats" inputmode="text" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" showClearButton="always"></ion-searchbar>
+            <ion-list>
+              <ion-radio-group name="contacts" formControlName="chat">
+                <ion-item *ngFor="let chat of displayedChats" lines="full">
+                  <ion-label>{{chat.name}}</ion-label>
+                  <ion-radio [value]="chat.id._serialized"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+          </div> -->
+
           <div class="container">
             <ion-item lines="full">
-              <ion-label>Select chat</ion-label>
-              <ion-select placeholder="Select chat" formControlName="chat">
+              <ion-select [multiple]="true" placeholder="Select chat" formControlName="chatIDs">
                 <ion-select-option *ngFor="let chat of clientChats" [value]="chat.id._serialized">{{chat.name}}</ion-select-option>
               </ion-select>
             </ion-item>

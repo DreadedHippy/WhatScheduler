@@ -22,7 +22,7 @@ const config: SocketIoConfig = { url: environment.baseSocketUrl, options: {} };
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

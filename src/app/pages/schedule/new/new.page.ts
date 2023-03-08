@@ -1,3 +1,5 @@
+import { SubSink } from 'subsink';
+import { Message } from './../../../interfaces/message';
 import { UtilityService } from './../../../services/utility.service';
 import { MessagingService } from './../../../services/messaging.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -11,13 +13,16 @@ import { Component, OnInit } from '@angular/core';
 export class NewPage implements OnInit {
   title = "New Schedule"
   messageForm = new FormGroup({
-    chat: new FormControl('', Validators.required),
+    chatIDs: new FormControl<string[]|null>([], Validators.required),
     message: new FormControl('', [Validators.required]),
     isInstant: new FormControl(true, [Validators.required]),
     date: new FormControl('')
   })
   clientChats: any[] = []
+  displayedChats: any[] = []
+  chat: any = null
   minDate = new Date().toISOString()
+  private subs = new SubSink()
 
   constructor(
     private msgSrv: MessagingService,
@@ -27,18 +32,20 @@ export class NewPage implements OnInit {
   ngOnInit() {
     if(this.msgSrv.clientChats.length > 0){
       this.clientChats = this.msgSrv.clientChats
+      this.displayedChats = [...this.clientChats]
       return
     }
     this.msgSrv.getClientChats().then(chats => {
       this.clientChats = chats
+      this.displayedChats = [...this.clientChats]
 
     })
   }
 
   onMessageSubmit(){
-    console.log(this.messageForm.value)
+    //Guards
     if(this.messageForm.value.isInstant === false){
-      if((this.messageForm.value.date == undefined || this.messageForm.value.date.length < 2)){
+      if(!(this.messageForm.value.date)){
         this.utilSrv.showToast("Please choose a date", 500)
         return
       }
@@ -46,11 +53,36 @@ export class NewPage implements OnInit {
       const currentDate = new Date()
       const date = new Date(this.messageForm.value.date)
 
-      if(currentDate.getTime() > date.getTime()){
-        this.utilSrv.showToast("Please schedule a date in the future", 500)
+      if((currentDate.getTime() + (1 * 60 * 1000)) > date.getTime()){
+        this.utilSrv.showToast("Please schedule at least one minute ahead", 500)
         return
       }
     }
+
+    const info: Message = {
+      chatIDs: this.messageForm.value.chatIDs,
+      message: this.messageForm.value.message,
+      isInstant: this.messageForm.value.isInstant,
+      date: this.messageForm.value.date
+    }
+
+    this.subs.sink = this.msgSrv.sendMessage(info).subscribe({
+      next: (result) => {
+        console.log(result)
+      },
+      error: (error) => {console.log(error)},
+      complete: () => {
+        console.log("Response received")
+      }
+    })
   }
 
+  onSearchChange(event: any){
+    const query = event.target?.value.toLowerCase();
+    this.displayedChats = this.clientChats.filter(chat => chat.name.toLowerCase().indexOf(query) > -1);
+  }
+
+  onChatsChange(event: any){
+    console.log("chats: ", event.value)
+  }
 }

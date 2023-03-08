@@ -1,3 +1,4 @@
+import { UtilityService } from './../services/utility.service';
 import { MessagingService } from './../services/messaging.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
@@ -9,7 +10,11 @@ import { resolve } from 'dns';
 })
 export class ClientGuard implements CanActivate {
 
-  constructor(private msgSrv: MessagingService, private router: Router){}
+  constructor(
+    private msgSrv: MessagingService,
+    private router: Router,
+    private utilSrv: UtilityService
+  ){}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -17,6 +22,7 @@ export class ClientGuard implements CanActivate {
       const isAllowed = this.msgSrv.getClientState();
       if(!isAllowed){
         this.router.navigate(['/home'])
+        this.utilSrv.showToast("Connect to the client to proceed", 500)
         return false
       }
       return true
