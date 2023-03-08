@@ -1,7 +1,7 @@
 import { MessagingService } from './../services/messaging.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { resolve } from 'dns';
 
 @Injectable({
@@ -14,15 +14,12 @@ export class ClientGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return new Promise((resolve, reject) => {
-        this.msgSrv.getClientState().subscribe({
-          next: (result) => {resolve(result)},
-          error: (error) => {
-            this.router.navigate(['/home'])
-            reject(false)
-          }
-        })
-      })
+      const isAllowed = this.msgSrv.getClientState();
+      if(!isAllowed){
+        this.router.navigate(['/home'])
+        return false
+      }
+      return true
   }
 
 }

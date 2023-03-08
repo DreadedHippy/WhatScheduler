@@ -15,6 +15,7 @@ export class MessagingService{
   baseUrl = environment.baseUrl;
   clientChats: any[] = [];
   private isClientReady = new Subject<boolean>()
+  private clientState = false
   private subs = new SubSink();
 
   constructor( private http: HttpClient, private socket: Socket) { }
@@ -40,8 +41,14 @@ export class MessagingService{
     this.socket.emit("connect_client", email)
 
     this.subs.sink = this.onSocketEvents().ready.subscribe({
-      next: () => {this.isClientReady.next(true)},
-      error: () => {this.isClientReady.next(false)},
+      next: () => {
+        this.isClientReady.next(true);
+        this.clientState = true
+      },
+      error: () => {
+        this.isClientReady.next(false);
+        this.clientState = false
+      },
       complete: () => {this.subs.unsubscribe}
     })
     // const url = this.baseUrl + `client/connect?clientID=${email}`
@@ -66,6 +73,7 @@ export class MessagingService{
           console.log(result)
           this.clientChats = result.data.chats
           this.isClientReady.next(true)
+          this.clientState = true
           resolve(this.clientChats)
         },
         error: (error) => {console.error(error)},
@@ -75,7 +83,7 @@ export class MessagingService{
   }
 
   getClientState(){
-    return this.isClientReady.asObservable()
+    return this.clientState
   }
 
 }
