@@ -1,6 +1,6 @@
 <app-header [title]="title"></app-header>
 <ion-content>
-  <div class="flex-toolbar">
+  <!-- <div class="flex-toolbar">
     <ion-searchbar
       placeholder="Search schedules"
       inputmode="search"
@@ -13,11 +13,57 @@
     <ion-button (click)="addSchedule()" expand="block">
       <ion-icon slot="icon-only" name="add"></ion-icon>
     </ion-button>
-  </div>
+  </div> -->
 
-  <div class="no-schedule">
+  <div class="no-schedule" *ngIf="schedules.length < 1">
     <ion-text color="primary">
       <h2>No schedules found, add one with the "+" button above</h2>
     </ion-text>
+  </div>
+
+  <div class="schedules">
+    <div class="flex">
+      <div class="flex-title">
+        <ion-label>Schedules</ion-label>
+      </div>
+      <div class="flex-filter">
+        <ion-item>
+          <ion-icon slot="start" name="filter-outline"></ion-icon>
+          <ion-select value="all" interface="popover">
+            <ion-select-option value="all">All</ion-select-option>
+            <ion-select-option value="sent">Sent</ion-select-option>
+            <ion-select-option value="pending">Pending</ion-select-option>
+            <ion-select-option value="expired">Expired</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    </div>
+    <ion-accordion-group>
+      <ion-accordion *ngFor="let schedule of schedules" class="accordion">
+        <ion-item slot="header">
+          <ion-label>{{toDate(schedule.date)}}</ion-label>
+          <ion-chip color="primary" mode="ios" [color]="schedule.status === 'expired' ? 'danger' : schedule.status === 'sent' ? 'success': ''">
+            <ion-label>{{schedule.status}}</ion-label>
+          </ion-chip>
+        </ion-item>
+        <div class="accordion-content" slot="content">
+          <p class="ion-text-center bold">Message</p>
+          <div class="textarea-container">
+            <p class="message">{{schedule.message}}</p>
+          </div>
+          <p class="ion-text-center bold">Selected Chats</p>
+          <div class="selected-chats-container">
+            <div *ngFor="let chatID of schedule.chatIDs" class="selected-chat">
+              <ion-label>{{getChatName(chatID)}}</ion-label>
+            </div>
+          </div>
+          <ion-button (click)="onDelete(schedule._id)" expand="block" color="danger">
+            Delete
+          </ion-button>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+    <ion-list>
+    </ion-list>
   </div>
 </ion-content>

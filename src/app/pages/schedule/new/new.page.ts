@@ -67,10 +67,14 @@ export class NewPage implements OnInit {
     }
 
     this.subs.sink = this.msgSrv.sendMessage(info).subscribe({
-      next: (result) => {
+      next: (result: any) => {
         console.log(result)
+        this.utilSrv.showToast(result.message, 800)
       },
-      error: (error) => {console.log(error)},
+      error: (error: any) => {
+        console.log(error)
+        this.utilSrv.showToast(error.error.message, 800)
+      },
       complete: () => {
         console.log("Response received")
       }
