@@ -1,5 +1,6 @@
 <app-header [title]="title"></app-header>
 <ion-content>
+  <ion-progress-bar type="indeterminate" color="primary" [hidden]="!isSyncing"></ion-progress-bar>
   <!-- <div class="flex-toolbar">
     <ion-searchbar
       placeholder="Search schedules"
@@ -15,13 +16,13 @@
     </ion-button>
   </div> -->
 
-  <div class="no-schedule" *ngIf="schedules.length < 1">
+  <div class="no-schedule" *ngIf="schedules.length < 1 && !isSyncing">
     <ion-text color="primary">
       <h2>No schedules found, add one with the "+" button above</h2>
     </ion-text>
   </div>
 
-  <div class="schedules">
+  <div class="schedules" *ngIf="schedules.length > 0 && !isSyncing">
     <div class="flex">
       <div class="flex-title">
         <ion-label>Schedules</ion-label>
@@ -37,6 +38,9 @@
           </ion-select>
         </ion-item>
       </div>
+      <ion-button (click)="addSchedule()" expand="block">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
     </div>
     <ion-accordion-group>
       <ion-accordion *ngFor="let schedule of schedules" class="accordion">

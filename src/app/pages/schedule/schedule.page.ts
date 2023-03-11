@@ -17,6 +17,7 @@ export class SchedulePage implements OnInit {
   schedules: Schedule[] = []
   displayedSchedules: Schedule[] = []
   scheduleType = ""
+  isSyncing = true
   timeFormat: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'short',
@@ -39,10 +40,12 @@ export class SchedulePage implements OnInit {
         console.log(result);
         this.schedules = [...result.data.schedules]
         this.displayedSchedules = [...this.schedules]
+        this.schedules.reverse()
       },
       error:(error: any) => {console.log(error)},
       complete: () => {
-        this.subs.unsubscribe()
+        this.subs.unsubscribe();
+        this.isSyncing = false;
       }
     })
   }

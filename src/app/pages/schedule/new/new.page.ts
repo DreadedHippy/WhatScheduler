@@ -15,7 +15,7 @@ export class NewPage implements OnInit {
   messageForm = new FormGroup({
     chatIDs: new FormControl<string[]|null>([], Validators.required),
     message: new FormControl('', [Validators.required]),
-    isInstant: new FormControl(true, [Validators.required]),
+    isInstant: new FormControl(false, [Validators.required]),
     date: new FormControl('')
   })
   clientChats: any[] = []
@@ -43,42 +43,43 @@ export class NewPage implements OnInit {
   }
 
   onMessageSubmit(){
+    console.log(this.messageForm.value)
     //Guards
-    if(this.messageForm.value.isInstant === false){
-      if(!(this.messageForm.value.date)){
-        this.utilSrv.showToast("Please choose a date", 500)
-        return
-      }
+    // if(this.messageForm.value.isInstant === false){
+    //   if(!(this.messageForm.value.date)){
+    //     this.utilSrv.showToast("Please choose a date", 500)
+    //     return
+    //   }
 
-      const currentDate = new Date()
-      const date = new Date(this.messageForm.value.date)
+    //   const currentDate = new Date()
+    //   const date = new Date(this.messageForm.value.date)
 
-      if((currentDate.getTime() + (1 * 60 * 1000)) > date.getTime()){
-        this.utilSrv.showToast("Please schedule at least one minute ahead", 500)
-        return
-      }
-    }
+    //   if((currentDate.getTime() + (1 * 60 * 1000)) > date.getTime()){
+    //     this.utilSrv.showToast("Please schedule at least one minute ahead", 500)
+    //     return
+    //   }
+    // }
 
-    const info: Message = {
-      chatIDs: this.messageForm.value.chatIDs,
-      message: this.messageForm.value.message,
-      isInstant: this.messageForm.value.isInstant,
-      date: this.messageForm.value.date
-    }
+    // const info: Message = {
+    //   chatIDs: this.messageForm.value.chatIDs,
+    //   message: this.messageForm.value.message,
+    //   isInstant: this.messageForm.value.isInstant,
+    //   date: this.messageForm.value.date
+    // }
 
-    this.subs.sink = this.msgSrv.sendMessage(info).subscribe({
-      next: (result: any) => {
-        console.log(result)
-        this.utilSrv.showToast(result.message, 800)
-      },
-      error: (error: any) => {
-        console.log(error)
-        this.utilSrv.showToast(error.error.message, 800)
-      },
-      complete: () => {
-        console.log("Response received")
-      }
-    })
+    // this.subs.sink = this.msgSrv.sendMessage(info).subscribe({
+    //   next: (result: any) => {
+    //     console.log(result)
+    //     this.utilSrv.showToast(result.message, 800)
+    //   },
+    //   error: (error: any) => {
+    //     console.log(error)
+    //     this.utilSrv.showToast(error.error.message, 800)
+    //   },
+    //   complete: () => {
+    //     console.log("Response received")
+    //   }
+    // })
   }
 
   onSearchChange(event: any){
