@@ -40,9 +40,9 @@ div.flex{
 
 ion-accordion.accordion{
   border-radius: 8px;
-  border-top: 0.5px solid rgb(109, 109, 109);
-  border-right: 0.5px solid rgb(109, 109, 109);
-  border-left: 0.5px solid rgb(109, 109, 109);
+  border-top: 0.2px solid rgba(109, 109, 109, 0.559);
+  border-right: 0.2px solid rgba(109, 109, 109, 0.559);
+  border-left: 0.2px solid rgba(109, 109, 109, 0.559);
 }
 
 div.accordion-content{
@@ -55,6 +55,7 @@ div.accordion-content{
     font-weight: 300;
     font-style: italic;
     padding-left: 0.2em;
+    opacity: 0.72;
   }
 }
 
@@ -64,11 +65,12 @@ div.selected-chats-container{
   flex-wrap: wrap;
   align-items: center;
   border-radius: 8px;
-  border: 1px solid rgb(142, 142, 142);
+  border: 1.5px solid rgba(0, 0, 0, 0.32);
+  padding: 0.5em;
 
   div.selected-chat{
     margin: 0.3em;
-    padding: 0.5em;
+    padding: 0.8em;
     border-radius: 8px;
     background-color: rgb(117, 117, 117);
     color: rgb(255, 255, 255);
@@ -77,13 +79,12 @@ div.selected-chats-container{
 }
 
 div.textarea-container{
-  border: 1px solid rgb(142, 142, 142);
+  border: 1.5px solid rgba(0, 0, 0, 0.32);
   border-radius: 4px;
-  padding: 0.3em;
+  padding-left: 0.8em;
 
   p.message{
-    color: rgba(0, 0, 0, 0.65);
-    font-style: italic;
+    color: #616161;
   }
 }
 
@@ -93,7 +94,7 @@ ion-chip{
 
 div.divider{
   height: 0.025em;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.1);
   margin-top: -0.5rem;
   margin-bottom: 0.5rem;
 }

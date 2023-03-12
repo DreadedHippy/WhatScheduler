@@ -63,9 +63,9 @@ export class SchedulePage implements OnInit {
     return this.utilSrv.toDate(dateString, this.timeFormat)
   }
 
-  getChatName(chatID: string){
+  getChatInfo(chatID: string){
     const chat =  this.msgSrv.clientChats.find(elem => elem.id._serialized === chatID)
-    return chat.name
+    return {name: chat.name, isGroup: chat.isGroup}
   }
 
   onDelete(scheduleID: string){

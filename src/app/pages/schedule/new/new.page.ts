@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { SubSink } from 'subsink';
 import { Message } from './../../../interfaces/message';
 import { UtilityService } from './../../../services/utility.service';
@@ -11,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new.page.scss'],
 })
 export class NewPage implements OnInit {
+
   title = "New Schedule"
   messageForm = new FormGroup({
     chatIDs: new FormControl<string[]|null>([], Validators.required),
@@ -26,7 +28,8 @@ export class NewPage implements OnInit {
 
   constructor(
     private msgSrv: MessagingService,
-    private utilSrv: UtilityService
+    private utilSrv: UtilityService,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -71,6 +74,7 @@ export class NewPage implements OnInit {
       next: (result: any) => {
         console.log(result)
         this.utilSrv.showToast(result.message, 800)
+        this.navCtrl.navigateBack("/schedule")
       },
       error: (error: any) => {
         console.log(error)

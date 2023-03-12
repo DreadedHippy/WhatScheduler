@@ -52,14 +52,15 @@
         </ion-item>
         <div class="accordion-content" slot="content">
           <p class="header">Message</p>
+          <div class="divider"></div>
           <div class="textarea-container">
             <p class="message">{{schedule.message}}</p>
           </div>
           <p class="header">Chats</p>
           <div class="divider"></div>
           <div class="selected-chats-container">
-            <div *ngFor="let chatID of schedule.chatIDs" class="selected-chat">
-              <ion-label>{{getChatName(chatID)}}</ion-label>
+            <div *ngFor="let chatID of schedule.chatIDs" [ngStyle]="{'background-color': getChatInfo(chatID).isGroup ? '#22618B' : '#2374AB'}" class="selected-chat">
+              <ion-label>{{getChatInfo(chatID).name}}</ion-label>
             </div>
           </div>
           <ion-button (click)="onDelete(schedule._id)" expand="block" color="danger">
