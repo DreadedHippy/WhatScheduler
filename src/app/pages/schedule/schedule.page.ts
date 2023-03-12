@@ -40,7 +40,7 @@ export class SchedulePage implements OnInit {
         console.log(result);
         this.schedules = [...result.data.schedules]
         this.displayedSchedules = [...this.schedules]
-        this.schedules.reverse()
+        this.displayedSchedules.reverse()
       },
       error:(error: any) => {console.log(error)},
       complete: () => {
@@ -70,5 +70,18 @@ export class SchedulePage implements OnInit {
 
   onDelete(scheduleID: string){
     console.log("Working on it...")
+  }
+
+  onFilterChange(event: any){
+    const value = event.detail.value
+    if(value !== "all"){
+      this.displayedSchedules = this.schedules.filter(schedule => {
+        return schedule.status == value
+      })
+      this.displayedSchedules.reverse()
+    }else{
+      this.displayedSchedules = [...this.schedules]
+      this.displayedSchedules.reverse()
+    }
   }
 }

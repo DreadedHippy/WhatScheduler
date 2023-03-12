@@ -16,46 +16,47 @@
     </ion-button>
   </div> -->
 
-  <div class="no-schedule" *ngIf="schedules.length < 1 && !isSyncing">
+  <!-- Only shows once all schedules have been retrieved -->
+  <div class="flex" *ngIf="!isSyncing">
+    <div class="flex-filter">
+      <ion-item lines="none">
+        <ion-icon slot="start" name="filter-outline"></ion-icon>
+        <ion-select value="all" interface="popover" (ionChange)="onFilterChange($event)">
+          <ion-select-option value="all">All</ion-select-option>
+          <ion-select-option value="sent">Sent</ion-select-option>
+          <ion-select-option value="pending">Pending</ion-select-option>
+          <ion-select-option value="expired">Expired</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <ion-button (click)="addSchedule()" expand="block">
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- If there are no schedules -->
+  <div class="no-schedule" *ngIf="displayedSchedules.length < 1 && !isSyncing">
     <ion-text color="primary">
       <h2>No schedules found, add one with the "+" button above</h2>
     </ion-text>
   </div>
 
-  <div class="schedules" *ngIf="schedules.length > 0 && !isSyncing">
-    <div class="flex">
-      <div class="flex-title">
-        <ion-label>Schedules</ion-label>
-      </div>
-      <div class="flex-filter">
-        <ion-item>
-          <ion-icon slot="start" name="filter-outline"></ion-icon>
-          <ion-select value="all" interface="popover">
-            <ion-select-option value="all">All</ion-select-option>
-            <ion-select-option value="sent">Sent</ion-select-option>
-            <ion-select-option value="pending">Pending</ion-select-option>
-            <ion-select-option value="expired">Expired</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </div>
-      <ion-button (click)="addSchedule()" expand="block">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
-      </ion-button>
-    </div>
+  <div class="schedules" *ngIf="displayedSchedules.length > 0 && !isSyncing">
     <ion-accordion-group>
-      <ion-accordion *ngFor="let schedule of schedules" class="accordion">
+      <ion-accordion *ngFor="let schedule of displayedSchedules" class="accordion">
         <ion-item slot="header">
           <ion-label>{{toDate(schedule.date)}}</ion-label>
-          <ion-chip color="primary" mode="ios" [color]="schedule.status === 'expired' ? 'danger' : schedule.status === 'sent' ? 'success': ''">
+          <ion-chip color="primary" mode="ios" [color]="schedule.status === 'expired' ? 'danger' : schedule.status === 'sent' ? 'success': ''" [outline]="true">
             <ion-label>{{schedule.status}}</ion-label>
           </ion-chip>
         </ion-item>
         <div class="accordion-content" slot="content">
-          <p class="ion-text-center bold">Message</p>
+          <p class="header">Message</p>
           <div class="textarea-container">
             <p class="message">{{schedule.message}}</p>
           </div>
-          <p class="ion-text-center bold">Selected Chats</p>
+          <p class="header">Chats</p>
+          <div class="divider"></div>
           <div class="selected-chats-container">
             <div *ngFor="let chatID of schedule.chatIDs" class="selected-chat">
               <ion-label>{{getChatName(chatID)}}</ion-label>
