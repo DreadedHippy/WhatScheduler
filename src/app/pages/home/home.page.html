@@ -2,10 +2,12 @@
 
 <ion-content [fullscreen]="true">
   <div class="centered" *ngIf="!isClientReady">
-    <ion-button (click)="onConnect()" expand="block" fill="outline" shape="round" [disabled]="isButtonDisabled">
+
+    <ion-button (click)="onConnect()" expand="block" [disabled]="isButtonDisabled">
       <ion-text *ngIf="!isClientLoading">Connect</ion-text>
       <ion-spinner name="crescent" *ngIf="isClientLoading" color="tertiary"></ion-spinner>
     </ion-button>
+
     <div *ngIf="isQRCodeReceived">
       <qrcode [qrdata]="clientQRCode"></qrcode>
       <p>Using Whatsapp, Scan the QRCode above to connect to the WhatScheduler client</p>
@@ -17,24 +19,26 @@
       <ion-icon class="ready-icon" name="checkmark-circle-outline" color="success"></ion-icon>
       <p>Client Ready! Retrieving chats...</p>
     </div>
-    <ion-list lines="none">
-      <ion-item *ngFor="let i of [1,2,3,4,5,6,7,8,9,0]">
+    <ion-list lines="none" class="bg-transparent">
+      <ion-item *ngFor="let i of [1,2,3,4,5,6,7,8,9,0]" color="none">
           <ion-skeleton-text animated style="width: 100%; height: 2em"></ion-skeleton-text>
       </ion-item>
     </ion-list>
   </div>
 
-  <ion-list *ngIf="clientChats.length > 0">
+  <ion-list *ngIf="clientChats.length > 0" class="bg-transparent">
     <ion-list-header style="text-align: center;">
       <h2>Your Chats</h2>
     </ion-list-header>
-    <ion-item *ngFor="let chat of clientChats; index as i" [color]="chat.isGroup ? 'secondary' : 'light' ">
-     <ion-label>
-      {{chat.name}}
-      <ion-chip  *ngIf="chat.unreadCount > 0" class="ion-align-self-end">
-        <ion-label>{{chat.unreadCount}}</ion-label>
-      </ion-chip>
-    </ion-label>
-    </ion-item>
+    <div class="list-container">
+      <ion-item lines="none" *ngFor="let chat of clientChats; index as i" class="ion-no-padding chat" color="none" [ngStyle]="{'background-color': chat.isGroup ? '#00000030': ''}">
+        <ion-label>
+          {{chat.name}}
+          <ion-chip  *ngIf="chat.unreadCount > 0" class="ion-align-self-end">
+            <ion-label>{{chat.unreadCount}}</ion-label>
+          </ion-chip>
+        </ion-label>
+      </ion-item>
+    </div>
   </ion-list>
 </ion-content>

@@ -19,7 +19,7 @@
   <!-- Only shows once all schedules have been retrieved -->
   <div class="flex" *ngIf="!isSyncing">
     <div class="flex-filter">
-      <ion-item lines="none">
+      <ion-item lines="none" color="none">
         <ion-icon slot="start" name="filter-outline"></ion-icon>
         <ion-select value="all" interface="popover" (ionChange)="onFilterChange($event)">
           <ion-select-option value="all">All</ion-select-option>

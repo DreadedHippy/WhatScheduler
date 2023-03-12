@@ -253,3 +253,7 @@
 	--ion-color-shade: var(--ion-color-accent-shade);
 	--ion-color-tint: var(--ion-color-accent-tint);
 }
+
+ion-content{
+  --background:linear-gradient(150deg, #8afdf6, #8afdf6 65%,#c7fffb 70%, #8afdf6 );
+}
