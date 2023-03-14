@@ -67,4 +67,18 @@ export class HomePage implements OnInit {
     })
   }
 
+  sendToChat(id: any){
+    console.log(id)
+  }
+
+  disconnectClient(){
+    this.subs.sink = this.msgSrv.disconnectClient().subscribe({
+      next: (result) => {console.log(result)},
+      error: (error) => {console.log(error)},
+      complete: () => {
+        this.subs.unsubscribe();
+        window.location.reload()
+      }
+    })
+  }
 }

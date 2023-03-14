@@ -5,7 +5,7 @@
 
     <ion-button (click)="onConnect()" expand="block" [disabled]="isButtonDisabled">
       <ion-text *ngIf="!isClientLoading">Connect</ion-text>
-      <ion-spinner name="crescent" *ngIf="isClientLoading" color="tertiary"></ion-spinner>
+      <ion-spinner name="crescent" *ngIf="isClientLoading"></ion-spinner>
     </ion-button>
 
     <div *ngIf="isQRCodeReceived">
@@ -27,11 +27,16 @@
   </div>
 
   <ion-list *ngIf="clientChats.length > 0" class="bg-transparent">
-    <ion-list-header style="text-align: center;">
-      <h2>Your Chats</h2>
-    </ion-list-header>
+    <div class="flex">
+      <ion-list-header style="text-align: center;">
+        <h3>Your Chats</h3>
+      </ion-list-header>
+      <ion-button size="small" (click)="disconnectClient()" shape="round" color="danger">
+        <ion-icon slot="icon-only" size="small" name="power-sharp"></ion-icon>
+      </ion-button>
+    </div>
     <div class="list-container">
-      <ion-item lines="none" *ngFor="let chat of clientChats; index as i" class="ion-no-padding chat" color="none" [ngStyle]="{'background-color': chat.isGroup ? '#00000030': ''}">
+      <ion-item lines="none" (click)="sendToChat(chat.id._serialized)" *ngFor="let chat of clientChats; index as i" class="ion-no-padding chat" color="none" [ngStyle]="{'background-color': chat.isGroup ? '#00000030': ''}">
         <ion-label>
           {{chat.name}}
           <ion-chip  *ngIf="chat.unreadCount > 0" class="ion-align-self-end">

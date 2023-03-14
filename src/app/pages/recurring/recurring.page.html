@@ -1,4 +1,20 @@
 <app-header [title]="title"></app-header>
 <ion-content>
+  <ion-searchbar placeholder="Filter tasks" inputmode="search" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" showClearButton="always"></ion-searchbar>
+  <div class="flex">
+    <div class="flex-filter">
+      <ion-item color="none" lines="none">
+        <ion-icon slot="start" name="filter-outline"></ion-icon>
+        <ion-select value="all" placeholder="Filter">
+          <ion-select-option value="all">All</ion-select-option>
+          <ion-select-option value="running">Running</ion-select-option>
+          <ion-select-option value="stopped">Stopped</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <ion-button (click)="addTask()" >
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+    </ion-button>
+  </div>
 
 </ion-content>

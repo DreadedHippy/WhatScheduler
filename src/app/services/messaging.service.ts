@@ -90,4 +90,9 @@ export class MessagingService{
     return this.clientState
   }
 
+  disconnectClient(){
+    const email = localStorage.getItem("email")
+    return this.http.get(this.baseUrl+'client/disconnect?email='+email)
+  }
+
 }

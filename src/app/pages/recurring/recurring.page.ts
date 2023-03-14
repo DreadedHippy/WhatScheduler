@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class RecurringPage implements OnInit {
   title = "Recurring";
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
+  }
+
+  onSearchChange(e: any){
+
+  }
+
+  addTask(){
+    this.navCtrl.navigateForward("recurring/new")
   }
 
 }

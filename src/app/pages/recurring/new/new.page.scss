@@ -1,31 +1,41 @@
-// div.container{
-//   text-align: center;
-//   margin: 10px auto;
-//   border: 1px solid red;
+// ion-range {
+//   --bar-background: #a2d2ff;
+//   --bar-background-active: #bde0fe;
+//   --bar-height: 4px;
+//   --bar-border-radius: 4px;
+//   --knob-background: #ffc8dd;
+//   --knob-size: 30px;
+//   // --pin-background: #ffafcc;
+//   // --pin-color: #fff;
 // }
-.centered {
-  width: 80%;
-  max-width: 400px;
-  margin: 40px auto;
-  overflow: hidden;
-  text-align: center;
+
+// ion-range::part(tick) {
+//   background: #a2d2ff;
+//   border-radius: 8px;
+//   height: 1em;
+//   transform: translateY(-0.3em);
+//   width: 4px;
+// }
+
+// ion-range::part(tick-active) {
+//   background: rgb(60, 137, 224);
+//   border-radius: 8px;
+//   height: 1em;
+//   transform: translateY(-0.3em);
+//   width: 4px;
+// }
+
+.input-type-selector{
+  margin-bottom: 1em;
+  --background: #f0f0f0;
+  ion-label{
+    font-weight: 600;
+  }
 }
 
-.chat-list-header{
-  text-align: center;
-}
-
-ion-icon.ready-icon{
-  font-size: 128px
-}
-
-ion-chip {
-  --background: #ff0000de;
-  --color: #ffffff;
-}
-
-.bg-transparent {
-  background: transparent;
+ion-input.custom-cron-input{
+  font-family: monospace;
+  // letter-spacing: 2px;
 }
 
 // ion-item {
@@ -65,32 +75,3 @@ ion-chip {
 //   --ripple-color: #1e1e1e;
 //   --transition: background-color 15ms linear;
 // }
-
-ion-item.chat{
-  --padding-bottom: 1px;
-  --padding-start: 12px;
-  --padding-top: -3px;
-  --inner-padding-bottom: 0;
-  --inner-padding-top: 0;
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.11);
-  transition: 0.2s !important;
-}
-
-ion-item.chat:hover{
-  cursor: pointer;
-  transform: translateY(-2px);
-  box-shadow: 2px 2px 3px #000;
-}
-
-div.list-container{
-  padding-top: 1em;
-  border: 1.5px solid #c1c1c1;
-  border-radius: 8px;
-}
-
-div.flex{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}

@@ -26,8 +26,8 @@ const routes: Routes = [
   {
     path: 'recurring',
     loadChildren: () => import('./pages/recurring/recurring.module').then( m => m.RecurringPageModule),
-    canActivate: [AuthGuard, ClientGuard]
-  }
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
