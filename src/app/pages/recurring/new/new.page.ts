@@ -11,6 +11,7 @@ export class NewPage implements OnInit {
   inputType = "interval"
   selectedInterval = "hourly"
   taskForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
     type: new FormControl('interval', [Validators.required]),
     cronString: new FormControl(''),
     interval: new FormGroup({

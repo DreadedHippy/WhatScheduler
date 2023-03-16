@@ -6,7 +6,11 @@
     </ion-card-header>
     <ion-card-content class="ion-align-items-center">
       <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <ion-item class="input-type-selector">
+        <ion-item class="item-label-custom" fill="outline">
+          <!-- <ion-label>Name </ion-label> -->
+          <ion-input type="text" placeholder="Enter task name" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item class="item-label-custom">
           <ion-label>Type</ion-label>
           <ion-select formControlName="type" (ionChange)="changeType($event)" placeholder="Select type" interface="popover">
             <ion-select-option value="custom">Custom</ion-select-option>
