@@ -13,14 +13,16 @@
             <ion-select-option value="interval">Interval</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item *ngIf="inputType === 'custom'">
-          <ion-label position="floating">Custom cron expression:</ion-label>
-          <ion-input type="text" class="custom-cron-input" placeholder="Enter custom cron expression"></ion-input>
-        </ion-item>
-        <div id="interval-input" *ngIf="inputType === 'interval'">
+        <hr>
+        <div id="custom-input" *ngIf="inputType === 'custom'">
+          <ion-item>
+            <ion-label position="floating">Custom cron expression:</ion-label>
+            <ion-input type="text" formControlName="cronString" class="custom-cron-input" placeholder="Enter custom cron expression"></ion-input>
+          </ion-item>
+        </div>
+        <div id="interval-input" formGroupName="interval" *ngIf="inputType === 'interval'">
           <ion-item color="none">
             <ion-select value="hourly" (ionChange)="changeInterval($event)" interface="popover" placeholder="Select interval">
-              <ion-select-option value="minute">Every minute</ion-select-option>
               <ion-select-option value="hourly">Hourly</ion-select-option>
               <ion-select-option value="daily">Daily</ion-select-option>
               <ion-select-option value="weekly">Weekly</ion-select-option>
@@ -28,68 +30,47 @@
               <ion-select-option value="yearly">Yearly</ion-select-option>
             </ion-select>
           </ion-item>
+          <br/><br/>
           <ion-item>
             <ion-label>Minutes</ion-label>
-            <ion-select value="0" multiple="true" interface="alert" placeholder="Select minutes">
+            <ion-select value="0" formControlName="minute" multiple="true" interface="alert" placeholder="Select minutes">
               <ion-select-option *ngFor="let minute of minutes" [value]="minute.value">{{minute.display_text}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="selectedInterval !== 'minute' && selectedInterval !== 'hourly'">
             <ion-label>Hours</ion-label>
-            <ion-select value="0" multiple="true" interface="alert" placeholder="Select hours">
+            <ion-select value="0" multiple="true" formControlName="hour" interface="alert" placeholder="Select hours">
               <ion-select-option *ngFor="let hour of hours" [value]="hour.value">{{hour.display_text}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="selectedInterval === 'weekly'">
             <ion-label>Days-of-week</ion-label>
-            <ion-select value="1" multiple="true" interface="alert" placeholder="Select minutes">
+            <ion-select value="1" multiple="true"  formControlName="day_of_week" interface="alert" placeholder="Select minutes">
               <ion-select-option *ngFor="let day of days_of_week" [value]="day.value">{{day.display_text}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="selectedInterval === 'monthly' || selectedInterval === 'yearly'">
             <ion-label>Days-of-month</ion-label>
-            <ion-select value="1" multiple="true" interface="alert" placeholder="Select minutes">
+            <ion-select value="1" multiple="true" formControlName="day_of_month" interface="alert" placeholder="Select minutes">
               <ion-select-option *ngFor="let day of days_of_month" [value]="day.value">{{day.display_text}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="selectedInterval === 'yearly'">
             <ion-label>Months</ion-label>
-            <ion-select value="1" multiple="true" placeholder="Select months">
+            <ion-select value="1" multiple="true" formControlName="month" placeholder="Select months">
               <ion-select-option *ngFor="let month of months" [value]="month.value">{{month.display_text}}</ion-select-option>
             </ion-select>
           </ion-item>
         </div>
-        <!-- <div class="flex">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="5">
-                <ion-item>
-                  <ion-select value="point" placeholder="Type" interface="popover">
-                    <ion-select-option value="point">Point in time</ion-select-option>
-                    <ion-select-option value="range">Range of time</ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </ion-col>
-              <ion-col size="auto">
-                <ion-item>
-                  <ion-label>Every</ion-label>
-                  <ion-toggle [enableOnOffLabels]="true" ></ion-toggle>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <ion-range
-          min="0" max="59"
-          dualKnobs="true" pin="true"
-          snaps="true" step="1"
-          ticks="true" value="0"
-          color="primary"
-          (ionKnobMoveEnd)="minuteChange($event)">
-          </ion-range>
-        </div> -->
-        <ion-button block color="primary" type="submit" [disabled]="taskForm.invalid">
-          Create
-        </ion-button>
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="12" class="ion-text-center">
+              <ion-button class="create-schedule-button" block color="primary" type="submit" [disabled]="taskForm.invalid">
+                Create
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </form>
     </ion-card-content>
   </ion-card>

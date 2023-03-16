@@ -14,11 +14,11 @@ export class NewPage implements OnInit {
     type: new FormControl('interval', [Validators.required]),
     cronString: new FormControl(''),
     interval: new FormGroup({
-      minute: new FormControl(''),
-      hour: new FormControl(''),
-      day_of_month: new FormControl(''),
-      month: new FormControl(''),
-      day_of_week: new FormControl('')
+      minute: new FormControl<number[]>([0]),
+      hour: new FormControl<number[]>([0]),
+      day_of_month: new FormControl<number[]>([1]),
+      month: new FormControl<number[]>([1]),
+      day_of_week: new FormControl<number[]>([1])
     }),
   })
 
@@ -126,14 +126,46 @@ export class NewPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  minuteChange(e: any){
-    console.log(e.detail.value)
+    this.taskForm.controls.interval.controls.minute.setValidators(Validators.required)
   }
 
   onSubmit(){
-    console.log("Submitting...")
+    let cronString
+    if(this.taskForm.value.type == "custom"){
+      cronString = this.taskForm.value.cronString
+    }else{
+      console.log("Submitting...")
+      console.log(this.taskForm.value)
+      const interval = this.selectedInterval
+      const minute = this.taskForm.controls.interval.controls.minute.value?.length !== 0 ? this.taskForm.controls.interval.controls.minute.value?.join(",") : 0
+      const hour = this.taskForm.controls.interval.controls.hour.value?.length !== 0 ? this.taskForm.controls.interval.controls.hour.value?.join(",") : 0
+      const day_of_week = this.taskForm.controls.interval.controls.day_of_week.value?.length !== 0 ? this.taskForm.controls.interval.controls.day_of_week.value?.join(",") : 1
+      const day_of_month = this.taskForm.controls.interval.controls.day_of_month.value?.length !== 0 ? this.taskForm.controls.interval.controls.day_of_month.value?.join(",") : 1
+      const month = this.taskForm.controls.interval.controls.month.value?.length !== 0 ? this.taskForm.controls.interval.controls.month.value?.join(",") : 1
+      switch(interval){
+        case "hourly":
+          cronString = `${minute} * * * *`
+        break;
+        case "daily":
+          cronString = `${minute} ${hour} * * *`
+        break;
+        case "weekly":
+          cronString = `${minute} ${hour} * * ${day_of_week}`
+        break;
+        case "monthly":
+          cronString = `${minute} ${hour} ${day_of_month} * *`
+        break;
+        case "yearly":
+          cronString = `${minute} ${hour} ${day_of_month} ${month} *`
+        break;
+      }
+
+    }
+
+    console.log("Cron", cronString)
+    console.log("Hour",  this.taskForm.controls.interval.controls.hour.value)
+
+
   }
 
   changeType(e: any){
@@ -142,6 +174,30 @@ export class NewPage implements OnInit {
 
   changeInterval(e:any){
     this.selectedInterval = e.target.value
+    // this.taskForm.controls.interval.controls.minute.clearValidators()
+    // this.taskForm.controls.interval.controls.hour.clearValidators()
+    // this.taskForm.controls.interval.controls.day_of_week.clearValidators()
+    // this.taskForm.controls.interval.controls.day_of_month.clearValidators()
+    // this.taskForm.controls.interval.controls.month.clearValidators()
+    // switch (this.selectedInterval){
+    //   case 'hourly':
+    //     this.taskForm.controls.interval.controls.minute.setValidators(Validators.required)
+    //   break;
+    //   case 'daily':
+    //     this.taskForm.controls.interval.controls.hour.setValidators(Validators.required)
+    //   break;
+    //   case 'weekly':
+    //     this.taskForm.controls.interval.controls.day_of_week.setValidators(Validators.required)
+    //   break;
+    //   case 'monthly':
+    //     this.taskForm.controls.interval.controls.day_of_month.setValidators(Validators.required)
+    //   break;
+    //   case 'yearly':
+    //     this.taskForm.controls.interval.controls.month.setValidators(Validators.required)
+    //   break;
+
+    // }
+
   }
 }
 
