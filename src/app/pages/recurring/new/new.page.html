@@ -7,65 +7,102 @@
     <ion-card-content class="ion-align-items-center">
       <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
         <ion-item class="item-label-custom" fill="outline">
-          <!-- <ion-label>Name </ion-label> -->
           <ion-input type="text" placeholder="Enter task name" formControlName="name"></ion-input>
         </ion-item>
+        <div class="divider"></div>
+
+        <p class="field-header">Message</p>
+        <ion-item class="item-label-custom" fill="outline">
+          <ion-textarea type="text" placeholder="Enter message to be sent" formControlName="message"></ion-textarea>
+        </ion-item>
+
+        <div class="divider"></div>
+
+        <p class="field-header">Chats</p>
         <ion-item class="item-label-custom">
-          <ion-label>Type</ion-label>
-          <ion-select formControlName="type" (ionChange)="changeType($event)" placeholder="Select type" interface="popover">
-            <ion-select-option value="custom">Custom</ion-select-option>
-            <ion-select-option value="interval">Interval</ion-select-option>
+          <ion-label>Select Chats</ion-label>
+          <ion-select [multiple]="true" formControlName="chatIDs">
+            <ion-select-option *ngFor="let chat of clientChats" [value]="chat.id._serialized">{{chat.name}}</ion-select-option>
           </ion-select>
         </ion-item>
-        <hr>
-        <div id="custom-input" *ngIf="inputType === 'custom'">
-          <ion-item>
-            <ion-label position="floating">Custom cron expression:</ion-label>
-            <ion-input type="text" formControlName="cronString" class="custom-cron-input" placeholder="Enter custom cron expression"></ion-input>
-          </ion-item>
+
+        <div class="divider"></div>
+
+        <p class="field-header">Type</p>
+        <ion-radio-group class="radio-group" name="type" formControlName="type" (ionChange)="changeType($event)" value="interval">
+          <div class="radio-items-container">
+            <ion-item fill="outline">
+              <ion-radio value="custom"></ion-radio>
+              <ion-label style="padding: 0 1em 0 1em">Custom</ion-label>
+            </ion-item>
+            <div id="spacer"></div>
+            <ion-item fill="outline">
+              <ion-radio value="interval"></ion-radio>
+              <ion-label style="padding: 0 1em 0 1em;">Interval</ion-label>
+            </ion-item>
+          </div>
+        </ion-radio-group>
+
+        <div class="divider"></div>
+
+        <!-- Custom Input -->
+        <div *ngIf="inputType === 'custom'">
+          <p class="field-header">Custom cron expression</p>
+          <div id="custom-input">
+            <ion-item>
+              <ion-input type="text" formControlName="cronString" class="custom-cron-input" placeholder="Enter custom cron expression"></ion-input>
+            </ion-item>
+          </div>
         </div>
-        <div id="interval-input" formGroupName="interval" *ngIf="inputType === 'interval'">
-          <ion-item color="none">
-            <ion-select value="hourly" (ionChange)="changeInterval($event)" interface="popover" placeholder="Select interval">
-              <ion-select-option value="hourly">Hourly</ion-select-option>
-              <ion-select-option value="daily">Daily</ion-select-option>
-              <ion-select-option value="weekly">Weekly</ion-select-option>
-              <ion-select-option value="monthly">Monthly</ion-select-option>
-              <ion-select-option value="yearly">Yearly</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <br/><br/>
-          <ion-item>
-            <ion-label>Minutes</ion-label>
-            <ion-select value="0" formControlName="minute" multiple="true" interface="alert" placeholder="Select minutes">
-              <ion-select-option *ngFor="let minute of minutes" [value]="minute.value">{{minute.display_text}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item *ngIf="selectedInterval !== 'minute' && selectedInterval !== 'hourly'">
-            <ion-label>Hours</ion-label>
-            <ion-select value="0" multiple="true" formControlName="hour" interface="alert" placeholder="Select hours">
-              <ion-select-option *ngFor="let hour of hours" [value]="hour.value">{{hour.display_text}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item *ngIf="selectedInterval === 'weekly'">
-            <ion-label>Days-of-week</ion-label>
-            <ion-select value="1" multiple="true"  formControlName="day_of_week" interface="alert" placeholder="Select minutes">
-              <ion-select-option *ngFor="let day of days_of_week" [value]="day.value">{{day.display_text}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item *ngIf="selectedInterval === 'monthly' || selectedInterval === 'yearly'">
-            <ion-label>Days-of-month</ion-label>
-            <ion-select value="1" multiple="true" formControlName="day_of_month" interface="alert" placeholder="Select minutes">
-              <ion-select-option *ngFor="let day of days_of_month" [value]="day.value">{{day.display_text}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item *ngIf="selectedInterval === 'yearly'">
-            <ion-label>Months</ion-label>
-            <ion-select value="1" multiple="true" formControlName="month" placeholder="Select months">
-              <ion-select-option *ngFor="let month of months" [value]="month.value">{{month.display_text}}</ion-select-option>
-            </ion-select>
-          </ion-item>
+
+        <!-- Interval Input -->
+        <div *ngIf="inputType === 'interval'">
+          <p class="field-header">Interval</p>
+          <div id="interval-input" formGroupName="interval">
+            <ion-item color="none">
+              <ion-select value="hourly" (ionChange)="changeInterval($event)" interface="popover" placeholder="Select interval">
+                <ion-select-option value="hourly">Hourly</ion-select-option>
+                <ion-select-option value="daily">Daily</ion-select-option>
+                <ion-select-option value="weekly">Weekly</ion-select-option>
+                <ion-select-option value="monthly">Monthly</ion-select-option>
+                <ion-select-option value="yearly">Yearly</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <br/>
+            <ion-item>
+              <ion-label>Minutes</ion-label>
+              <ion-select value="0" formControlName="minute" multiple="true" interface="alert" placeholder="Select minutes">
+                <ion-select-option *ngFor="let minute of minutes" [value]="minute.value">{{minute.display_text}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="selectedInterval !== 'minute' && selectedInterval !== 'hourly'">
+              <ion-label>Hours</ion-label>
+              <ion-select value="0" multiple="true" formControlName="hour" interface="alert" placeholder="Select hours">
+                <ion-select-option *ngFor="let hour of hours" [value]="hour.value">{{hour.display_text}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="selectedInterval === 'weekly'">
+              <ion-label>Days-of-week</ion-label>
+              <ion-select value="1" multiple="true"  formControlName="day_of_week" interface="alert" placeholder="Select days of week">
+                <ion-select-option *ngFor="let day of days_of_week" [value]="day.value">{{day.display_text}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="selectedInterval === 'monthly' || selectedInterval === 'yearly'">
+              <ion-label>Days-of-month</ion-label>
+              <ion-select value="1" multiple="true" formControlName="day_of_month" interface="alert" placeholder="Select days of month">
+                <ion-select-option *ngFor="let day of days_of_month" [value]="day.value">{{day.display_text}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="selectedInterval === 'yearly'">
+              <ion-label>Months</ion-label>
+              <ion-select value="1" multiple="true" formControlName="month" placeholder="Select months">
+                <ion-select-option *ngFor="let month of months" [value]="month.value">{{month.display_text}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
         </div>
+
+        <!-- Centered button -->
         <ion-grid>
           <ion-row class="ion-align-items-center">
             <ion-col size="12" class="ion-text-center">

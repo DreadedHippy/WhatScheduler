@@ -1,5 +1,11 @@
+import { SubSink } from 'subsink';
+import { UtilityService } from './../../../services/utility.service';
+import { TaskService } from './../../../services/task.service';
+import { MessagingService } from './../../../services/messaging.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Task } from 'src/app/interfaces/task';
+import { isValidCron } from 'cron-validator';
 
 @Component({
   selector: 'app-new',
@@ -10,10 +16,14 @@ export class NewPage implements OnInit {
   title = "New Task"
   inputType = "interval"
   selectedInterval = "hourly"
+  clientChats: any[] = []
+  displayedChats: any[] = []
   taskForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
+    message: new FormControl('', [Validators.required]),
     type: new FormControl('interval', [Validators.required]),
     cronString: new FormControl(''),
+    chatIDs: new FormControl<string[]> ([], [Validators.required]),
     interval: new FormGroup({
       minute: new FormControl<number[]>([0]),
       hour: new FormControl<number[]>([0]),
@@ -124,19 +134,44 @@ export class NewPage implements OnInit {
     {value: 31, display_text: "31st"}
   ]
 
-  constructor() { }
+  private subs = new SubSink()
+
+  constructor(
+    private msgSrv: MessagingService,
+    private taskSrv: TaskService,
+    private utilSrv: UtilityService
+  ) { }
 
   ngOnInit() {
     this.taskForm.controls.interval.controls.minute.setValidators(Validators.required)
+    if(this.msgSrv.clientChats.length > 0){
+      this.clientChats = this.msgSrv.clientChats
+      this.displayedChats = [...this.clientChats]
+      return
+    }
+    this.msgSrv.getClientChats().then(chats => {
+      this.clientChats = chats
+      this.displayedChats = [...this.clientChats]
+
+    })
+  }
+
+  isCronValid(cronInput: any) {
+    var cronRegex = new RegExp(/^(\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])|\*\/([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])) (\*|([0-9]|1[0-9]|2[0-3])|\*\/([0-9]|1[0-9]|2[0-3])) (\*|([1-9]|1[0-9]|2[0-9]|3[0-1])|\*\/([1-9]|1[0-9]|2[0-9]|3[0-1])) (\*|([1-9]|1[0-2])|\*\/([1-9]|1[0-2])) (\*|([0-6])|\*\/([0-6]))$/);
+    return cronRegex.test(cronInput);
   }
 
   onSubmit(){
-    let cronString
+    let cronString: any;
     if(this.taskForm.value.type == "custom"){
       cronString = this.taskForm.value.cronString
+      if(isValidCron(cronString) == false){
+        cronString = ""
+        this.taskForm.controls.cronString.setErrors({incorrect: true})
+        this.utilSrv.showToast("Please enter a valid cron string", 1000)
+        return
+      }
     }else{
-      console.log("Submitting...")
-      console.log(this.taskForm.value)
       const interval = this.selectedInterval
       const minute = this.taskForm.controls.interval.controls.minute.value?.length !== 0 ? this.taskForm.controls.interval.controls.minute.value?.join(",") : 0
       const hour = this.taskForm.controls.interval.controls.hour.value?.length !== 0 ? this.taskForm.controls.interval.controls.hour.value?.join(",") : 0
@@ -163,9 +198,27 @@ export class NewPage implements OnInit {
 
     }
 
-    console.log("Cron", cronString)
-    console.log("Hour",  this.taskForm.controls.interval.controls.hour.value)
+    //Actually creating the task object
+    const name = this.taskForm.value.name;
+    const message = this.taskForm.value.message;
+    const chatIDs = this.taskForm.value.chatIDs;
+    const task: Task = {
+      name,
+      message,
+      chatIDs,
+      cronString
+    }
 
+    this.createTask(task)
+
+  }
+
+  createTask(task: Task){
+    this.subs.sink = this.taskSrv.createTask(task).subscribe({
+      next: (result) => {console.log(result)},
+      error: (error) => {console.log(error)},
+      complete: () => {this.subs.unsubscribe()},
+    })
 
   }
 
@@ -175,30 +228,6 @@ export class NewPage implements OnInit {
 
   changeInterval(e:any){
     this.selectedInterval = e.target.value
-    // this.taskForm.controls.interval.controls.minute.clearValidators()
-    // this.taskForm.controls.interval.controls.hour.clearValidators()
-    // this.taskForm.controls.interval.controls.day_of_week.clearValidators()
-    // this.taskForm.controls.interval.controls.day_of_month.clearValidators()
-    // this.taskForm.controls.interval.controls.month.clearValidators()
-    // switch (this.selectedInterval){
-    //   case 'hourly':
-    //     this.taskForm.controls.interval.controls.minute.setValidators(Validators.required)
-    //   break;
-    //   case 'daily':
-    //     this.taskForm.controls.interval.controls.hour.setValidators(Validators.required)
-    //   break;
-    //   case 'weekly':
-    //     this.taskForm.controls.interval.controls.day_of_week.setValidators(Validators.required)
-    //   break;
-    //   case 'monthly':
-    //     this.taskForm.controls.interval.controls.day_of_month.setValidators(Validators.required)
-    //   break;
-    //   case 'yearly':
-    //     this.taskForm.controls.interval.controls.month.setValidators(Validators.required)
-    //   break;
-
-    // }
-
   }
 }
 
