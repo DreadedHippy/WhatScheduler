@@ -165,7 +165,7 @@ export class NewPage implements OnInit {
     let cronString: any;
     if(this.taskForm.value.type == "custom"){
       cronString = this.taskForm.value.cronString
-      if(isValidCron(cronString) == false){
+      if(isValidCron(cronString, {seconds: true}) == false){
         cronString = ""
         this.taskForm.controls.cronString.setErrors({incorrect: true})
         this.utilSrv.showToast("Please enter a valid cron string", 1000)
