@@ -38,63 +38,6 @@ div.flex{
   }
 }
 
-ion-accordion.accordion{
-  // border-radius: 0;
-  border-top: 0.2px solid rgba(109, 109, 109, 0.559);
-  border-right: 0.2px solid rgba(109, 109, 109, 0.559);
-  border-left: 0.2px solid rgba(109, 109, 109, 0.559);
-}
-
-div.accordion-content{
-  padding: 1em;
-  border-radius: 0 0 8px 8px;
-  margin-bottom: 0.2em;
-  // box-shadow: 3px 6px black;
-
-  p.header{
-    font-weight: 300;
-    font-style: italic;
-    padding-left: 0.2em;
-    opacity: 0.72;
-  }
-}
-
-div.selected-chats-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  border-radius: 8px;
-  border: 1.5px solid rgba(0, 0, 0, 0.32);
-  padding: 0.5em;
-
-  div.selected-chat{
-    margin: 0.3em;
-    padding: 0.8em;
-    border-radius: 8px;
-    background-color: rgb(117, 117, 117);
-    color: rgb(255, 255, 255);
-    width: auto;
-  }
-}
-
-div.textarea-container{
-  border: 1.5px solid rgba(0, 0, 0, 0.32);
-  border-radius: 4px;
-  padding-left: 0.8em;
-
-  p.message{
-    color: #616161;
-  }
-}
-
 ion-chip{
   text-transform: capitalize;
-}
-
-div.divider{
-  height: 0.025em;
-  background-color: rgba(0, 0, 0, 0.1);
-  margin-top: -0.5rem;
-  margin-bottom: 0.5rem;
 }

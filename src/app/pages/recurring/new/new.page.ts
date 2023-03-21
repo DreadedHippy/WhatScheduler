@@ -22,7 +22,7 @@ export class NewPage implements OnInit {
     name: new FormControl('', [Validators.required]),
     message: new FormControl('', [Validators.required]),
     type: new FormControl('interval', [Validators.required]),
-    cronString: new FormControl(''),
+    cronJob: new FormControl(''),
     chatIDs: new FormControl<string[]> ([], [Validators.required]),
     interval: new FormGroup({
       minute: new FormControl<number[]>([0]),
@@ -162,12 +162,12 @@ export class NewPage implements OnInit {
   }
 
   onSubmit(){
-    let cronString: any;
+    let cronJob: any;
     if(this.taskForm.value.type == "custom"){
-      cronString = this.taskForm.value.cronString
-      if(isValidCron(cronString, {seconds: true}) == false){
-        cronString = ""
-        this.taskForm.controls.cronString.setErrors({incorrect: true})
+      cronJob = this.taskForm.value.cronJob
+      if(isValidCron(cronJob, {seconds: true}) == false){
+        cronJob = ""
+        this.taskForm.controls.cronJob.setErrors({incorrect: true})
         this.utilSrv.showToast("Please enter a valid cron string", 1000)
         return
       }
@@ -180,19 +180,19 @@ export class NewPage implements OnInit {
       const month = this.taskForm.controls.interval.controls.month.value?.length !== 0 ? this.taskForm.controls.interval.controls.month.value?.join(",") : 1
       switch(interval){
         case "hourly":
-          cronString = `${minute} * * * *`
+          cronJob = `${minute} * * * *`
         break;
         case "daily":
-          cronString = `${minute} ${hour} * * *`
+          cronJob = `${minute} ${hour} * * *`
         break;
         case "weekly":
-          cronString = `${minute} ${hour} * * ${day_of_week}`
+          cronJob = `${minute} ${hour} * * ${day_of_week}`
         break;
         case "monthly":
-          cronString = `${minute} ${hour} ${day_of_month} * *`
+          cronJob = `${minute} ${hour} ${day_of_month} * *`
         break;
         case "yearly":
-          cronString = `${minute} ${hour} ${day_of_month} ${month} *`
+          cronJob = `${minute} ${hour} ${day_of_month} ${month} *`
         break;
       }
 
@@ -206,7 +206,7 @@ export class NewPage implements OnInit {
       name,
       message,
       chatIDs,
-      cronString
+      cronJob
     }
 
     this.createTask(task)

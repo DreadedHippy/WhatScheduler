@@ -41,7 +41,7 @@
     </ion-text>
   </div>
 
-  <div class="schedules" *ngIf="displayedSchedules.length > 0 && !isSyncing">
+  <div class="list-container" *ngIf="displayedSchedules.length > 0 && !isSyncing">
     <ion-accordion-group>
       <ion-accordion *ngFor="let schedule of displayedSchedules" class="accordion">
         <ion-item slot="header">
@@ -60,7 +60,7 @@
           <div class="divider"></div>
           <div class="selected-chats-container">
             <div *ngFor="let chatID of schedule.chatIDs" [ngStyle]="{'background-color': getChatInfo(chatID).isGroup ? '#22618B' : '#2374AB'}" class="selected-chat">
-              <ion-label>{{getChatInfo(chatID).name}}</ion-label>
+              <ion-label>{{getChatInfo(chatID).name || "..."}}</ion-label>
             </div>
           </div>
           <ion-button (click)="onDelete(schedule._id)" expand="block" color="danger">
@@ -69,7 +69,5 @@
         </div>
       </ion-accordion>
     </ion-accordion-group>
-    <ion-list>
-    </ion-list>
   </div>
 </ion-content>

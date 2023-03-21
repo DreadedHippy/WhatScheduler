@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
+import { MessagingService } from './messaging.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
 
-  constructor(private toastCtrl: ToastController) { }
+  constructor(
+    private toastCtrl: ToastController,
+    private msgSrv: MessagingService,
+    private navCtrl: NavController
+  ) { }
 
   // timeFormat: Intl.DateTimeFormatOptions = {
   //   year: 'numeric',
@@ -36,5 +41,14 @@ export class UtilityService {
   toDate(dateString: string, options: Intl.DateTimeFormatOptions){
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", options)
+  }
+
+  getChatInfo(chatID: string){
+    const chat =  this.msgSrv.clientChats.find(elem => elem.id._serialized === chatID)
+    if(!chat){
+      this.navCtrl.navigateRoot("/home")
+      return {name: "", isGroup: false}
+    }
+    return {name: chat.name, isGroup: chat.isGroup}
   }
 }

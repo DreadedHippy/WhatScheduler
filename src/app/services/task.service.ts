@@ -21,4 +21,16 @@ export class TaskService {
     const url = environment.baseUrl + 'tasks/create?email=' + email
     return this.http.post(url, obj)
   }
+
+  getTasks(){
+    const email = localStorage.getItem("email")
+    const url = environment.baseUrl + 'tasks?email=' + email
+    return this.http.get(url)
+  }
+
+  stopTask(taskID: string){
+    const email = localStorage.getItem("email");
+    const url = environment.baseUrl + `tasks/${taskID}`
+    return this.http.patch(url, {email, action: 'stop'})
+  }
 }

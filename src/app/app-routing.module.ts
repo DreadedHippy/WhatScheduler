@@ -21,12 +21,12 @@ const routes: Routes = [
   {
     path: 'schedule',
     loadChildren: () => import('./pages/schedule/schedule.module').then( m => m.SchedulePageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
   {
     path: 'recurring',
     loadChildren: () => import('./pages/recurring/recurring.module').then( m => m.RecurringPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ClientGuard]
   },
 ];
 

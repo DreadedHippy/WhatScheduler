@@ -17,4 +17,67 @@
     </ion-button>
   </div>
 
+  <div class="no-tasks" *ngIf="displayedTasks.length < 1 && !isSyncing">
+    <ion-text color="primary">
+      <h2>No tasks found, add one with the "+" button above</h2>
+    </ion-text>
+  </div>
+
+
+  <div class="list-container" *ngIf="displayedTasks.length > 0 && !isSyncing">
+    <ion-accordion-group>
+      <ion-accordion *ngFor="let task of displayedTasks">
+        <ion-item slot="header">
+          <ion-label>{{task.name}}</ion-label>
+          <ion-button fill="clear" [color]="task.isRunning ? 'danger' : 'success'" (click)="onClick($event, task._id)">
+            <ion-label><ion-icon size="large" [name]="task.isRunning ? 'stop' : 'play'" [color]="task.isRunning ? 'danger' : 'success'"></ion-icon></ion-label>
+          </ion-button>
+        </ion-item>
+        <div class="accordion-content" slot="content">
+          <p class="header">Message</p>
+          <div class="divider"></div>
+          <div class="textarea-container">
+            <p class="message">{{task.message}}</p>
+          </div>
+          <p class="header">Chats</p>
+          <div class="divider"></div>
+          <div class="selected-chats-container">
+            <div *ngFor="let chatID of task.chatIDs" [ngStyle]="{'background-color': getChatInfo(chatID).isGroup ? '#22618B' : '#2374AB'}" class="selected-chat">
+              <ion-label>{{getChatInfo(chatID).name}}</ion-label>
+            </div>
+          </div>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+  <!-- <div class="list-container" *ngIf="displayedTasks.length > 0 && !isSyncing">
+    <ion-accordion-group>
+      <ion-accordion *ngFor="let task of displayedTasks">
+        <ion-item slot="header">
+          <ion-label>{{task.name}}</ion-label>
+          <ion-button mode="ios" [color]="task.isRunning ? 'danger' : 'success'">
+            <ion-label><ion-icon [name]="task.isRunning ? 'stop' : 'play'"></ion-icon></ion-label>
+          </ion-button>
+        </ion-item>
+        <div class="accordion-content" slot="content">
+          <p class="header">Message</p>
+          <div class="divider"></div>
+          <div class="textarea-container">
+            <p class="message">{{task.message}}</p>
+          </div>
+          <p class="header">Chats</p>
+          <div class="divider"></div>
+          <div class="selected-chats-container">
+            <div *ngFor="let chatID of task.chatIDs" [ngStyle]="{'background-color': getChatInfo(chatID).isGroup ? '#22618B' : '#2374AB'}" class="selected-chat">
+              <ion-label>{{getChatInfo(chatID).name || "..."}}</ion-label>
+            </div>
+          </div>
+          <ion-button (click)="onDelete(task._id)" expand="block" color="danger">
+            Delete
+          </ion-button>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div> -->
+
 </ion-content>
