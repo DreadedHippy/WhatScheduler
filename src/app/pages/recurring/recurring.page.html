@@ -29,7 +29,7 @@
       <ion-accordion *ngFor="let task of displayedTasks">
         <ion-item slot="header">
           <ion-label>{{task.name}}</ion-label>
-          <ion-button fill="clear" [color]="task.isRunning ? 'danger' : 'success'" (click)="onClick($event, task._id)">
+          <ion-button fill="clear" [color]="task.isRunning ? 'danger' : 'success'" (click)="onClick($event, task._id, task.isRunning)">
             <ion-label><ion-icon size="large" [name]="task.isRunning ? 'stop' : 'play'" [color]="task.isRunning ? 'danger' : 'success'"></ion-icon></ion-label>
           </ion-button>
         </ion-item>

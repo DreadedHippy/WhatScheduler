@@ -60,13 +60,26 @@ export class RecurringPage implements OnInit {
     return this.utilSrv.getChatInfo(chatID)
   }
 
-  onClick(event: any, taskID: string | undefined){
+  onClick(event: any, taskID: string | undefined, isRunning: boolean | undefined){
     event.stopPropagation()
     if(!taskID){
       this.utilSrv.showToast("InvalidTask", 1000)
       return
     }
-    this.subs.sink = this.taskSrv.stopTask(taskID).subscribe({
+    if (isRunning){
+      this.subs.sink = this.taskSrv.stopTask(taskID).subscribe({
+        next: (result: any) => {
+          console.log(result)
+          this.getTasks()
+        }, error: (error: any) => {
+          console.log(error)
+        }, complete: () => {
+          console.log("completed")
+        }
+      })
+      return
+    }
+    this.subs.sink = this.taskSrv.resumeTask(taskID).subscribe({
       next: (result: any) => {
         console.log(result)
         this.getTasks()

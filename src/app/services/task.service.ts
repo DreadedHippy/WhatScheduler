@@ -30,7 +30,13 @@ export class TaskService {
 
   stopTask(taskID: string){
     const email = localStorage.getItem("email");
-    const url = environment.baseUrl + `tasks/${taskID}`
+    const url = environment.baseUrl + `tasks/${taskID}/stop`
     return this.http.patch(url, {email, action: 'stop'})
+  }
+
+  resumeTask(taskID: string){
+    const email = localStorage.getItem("email");
+    const url = environment.baseUrl + `tasks/${taskID}/resume`
+    return this.http.patch(url, {email})
   }
 }
