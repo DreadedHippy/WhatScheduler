@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { SubSink } from 'subsink';
 import { Message } from './../../interfaces/message';
 import { MessagingService } from './../../services/messaging.service';
@@ -17,6 +18,7 @@ export class HomePage implements OnInit {
   clientQRCode : any = "";
   isQRCodeReceived = false;
   isClientLoading = false;
+  isClientAuthenticated = false;
   isClientReady = false;
   clientChats: any[] = [];
   private subs = new SubSink
@@ -28,7 +30,7 @@ export class HomePage implements OnInit {
   })
 
 
-  constructor( private msgSrv: MessagingService) { }
+  constructor( private msgSrv: MessagingService, private navCtrl: NavController) { }
 
   ngOnInit() {
     const events = this.msgSrv.onSocketEvents()
@@ -41,7 +43,11 @@ export class HomePage implements OnInit {
     this.subs.sink = events.qrcode.subscribe( (code: any) => {
       this.isQRCodeReceived = true
       this.clientQRCode = code
-      console.log({clientQR: this.clientQRCode})
+      this.isClientLoading = false
+    })
+
+    this.subs.sink = events.authenticated.subscribe( () => {
+      this.isClientAuthenticated = true
       this.isClientLoading = false
     })
 
@@ -69,6 +75,7 @@ export class HomePage implements OnInit {
 
   sendToChat(id: any){
     console.log(id)
+    this.navCtrl.navigateForward(`schedule/new?chatId=${id}`)
   }
 
   disconnectClient(){

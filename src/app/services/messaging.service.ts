@@ -36,7 +36,8 @@ export class MessagingService{
   onSocketEvents(){
     return  {
       qrcode: this.socket.fromEvent("qrcode"),
-      ready: this.socket.fromEvent("client_ready")
+      authenticated: this.socket.fromEvent("authenticated"),
+      ready: this.socket.fromEvent("client_ready"),
     }
   }
 

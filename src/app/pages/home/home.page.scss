@@ -28,44 +28,6 @@ ion-chip {
   background: transparent;
 }
 
-// ion-item {
-//   --background: #3880ff;
-//   --background-activated: #3880ff;
-//   --background-activated-opacity: 1;
-//   --background-focused: #3880ff;
-//   --background-focused-opacity: 1;
-//   --background-hover: #3880ff;
-//   --background-hover-opacity: 1;
-//   --border-color: #3880ff;
-//   --border-radius: 8px;
-//   --border-style: solid;
-//   --border-width: 8px;
-//   --color: #ffffff;
-//   --color-activated: #3880ff;
-//   --color-focused: #3880ff;
-//   --color-hover: #3880ff;
-//   --detail-icon-color: #989aa2;
-//   --detail-icon-font-size: 16px;
-//   --detail-icon-opacity: 1;
-//   --highlight-color-focused: #0cd1e8;
-//   --highlight-color-invalid: #f04141;
-//   --highlight-color-valid: #10dc60;
-//   --highlight-height: 32px;
-//   --inner-border-width: 8px;
-//   --inner-box-shadow: 4px 4px;
-//   --inner-padding-bottom: 4px;
-//   --inner-padding-end: 4px;
-//   --inner-padding-start: 4px;
-//   --inner-padding-top: 4px;
-//   --min-height: 24px;
-//   --padding-bottom: 4px;
-//   --padding-end: 4px;
-//   --padding-start: 4px;
-//   --padding-top: 4px;
-//   --ripple-color: #1e1e1e;
-//   --transition: background-color 15ms linear;
-// }
-
 ion-item.chat{
   --padding-bottom: 1px;
   --padding-start: 12px;
@@ -87,4 +49,23 @@ div.flex{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.sync-container{
+  margin-top: 2em;
+}
+
+.sync-icon{
+  font-size: 4em;
+  animation: rotate 2s linear 0s infinite forwards;
+  color: var(--ion-color-tertiary-shade);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

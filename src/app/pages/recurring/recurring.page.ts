@@ -63,12 +63,13 @@ export class RecurringPage implements OnInit {
   onClick(event: any, taskID: string | undefined, isRunning: boolean | undefined){
     event.stopPropagation()
     if(!taskID){
-      this.utilSrv.showToast("InvalidTask", 1000)
+      this.utilSrv.showToast("Invalid Task", 1000)
       return
     }
     if (isRunning){
       this.subs.sink = this.taskSrv.stopTask(taskID).subscribe({
         next: (result: any) => {
+          this.utilSrv.showToast("Recurring message stopped", 1000)
           console.log(result)
           this.getTasks()
         }, error: (error: any) => {
@@ -79,8 +80,10 @@ export class RecurringPage implements OnInit {
       })
       return
     }
+
     this.subs.sink = this.taskSrv.resumeTask(taskID).subscribe({
       next: (result: any) => {
+        this.utilSrv.showToast("Recurring message resumed", 1000)
         console.log(result)
         this.getTasks()
       }, error: (error: any) => {
@@ -94,5 +97,21 @@ export class RecurringPage implements OnInit {
 
   onDelete(taskID: string | undefined){
     console.log("Trying to delete")
+    if(!taskID){
+      this.utilSrv.showToast("Invalid recurring message", 1000)
+      return
+    }
+
+    this.subs.sink = this.taskSrv.deleteTask(taskID)?.subscribe({
+      next: (result: any) => {
+        console.log(result);
+        this.utilSrv.showToast("Recurring message deleted deleted", 1000)
+      },
+      error: (error: any) => { console.log(error)},
+      complete: () => {
+        console.log("completed")
+        this.getTasks()
+      }
+    })
   }
 }

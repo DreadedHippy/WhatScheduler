@@ -46,38 +46,11 @@
               <ion-label>{{getChatInfo(chatID).name}}</ion-label>
             </div>
           </div>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
-  </div>
-  <!-- <div class="list-container" *ngIf="displayedTasks.length > 0 && !isSyncing">
-    <ion-accordion-group>
-      <ion-accordion *ngFor="let task of displayedTasks">
-        <ion-item slot="header">
-          <ion-label>{{task.name}}</ion-label>
-          <ion-button mode="ios" [color]="task.isRunning ? 'danger' : 'success'">
-            <ion-label><ion-icon [name]="task.isRunning ? 'stop' : 'play'"></ion-icon></ion-label>
-          </ion-button>
-        </ion-item>
-        <div class="accordion-content" slot="content">
-          <p class="header">Message</p>
-          <div class="divider"></div>
-          <div class="textarea-container">
-            <p class="message">{{task.message}}</p>
-          </div>
-          <p class="header">Chats</p>
-          <div class="divider"></div>
-          <div class="selected-chats-container">
-            <div *ngFor="let chatID of task.chatIDs" [ngStyle]="{'background-color': getChatInfo(chatID).isGroup ? '#22618B' : '#2374AB'}" class="selected-chat">
-              <ion-label>{{getChatInfo(chatID).name || "..."}}</ion-label>
-            </div>
-          </div>
           <ion-button (click)="onDelete(task._id)" expand="block" color="danger">
             Delete
           </ion-button>
         </div>
       </ion-accordion>
     </ion-accordion-group>
-  </div> -->
-
+  </div>
 </ion-content>

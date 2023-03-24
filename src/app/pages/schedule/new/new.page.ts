@@ -5,6 +5,7 @@ import { UtilityService } from './../../../services/utility.service';
 import { MessagingService } from './../../../services/messaging.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new',
@@ -29,10 +30,23 @@ export class NewPage implements OnInit {
   constructor(
     private msgSrv: MessagingService,
     private utilSrv: UtilityService,
+    private route: ActivatedRoute,
     private navCtrl: NavController
   ) { }
 
   ngOnInit() {
+    this.subs.sink = this.route.queryParams.subscribe({
+      next: (queries: any) => {
+        const chatId = queries.chatId
+        this.messageForm.controls.chatIDs.setValue([chatId])
+      },
+      error: (error) => {
+        console.log(error)
+      },
+      complete: () => {
+        this.subs.unsubscribe()
+      }
+    })
     if(this.msgSrv.clientChats.length > 0){
       this.clientChats = this.msgSrv.clientChats
       this.displayedChats = [...this.clientChats]

@@ -13,10 +13,6 @@ export class TaskService {
 
   createTask(obj: Task){
     const email = localStorage.getItem("email")
-    // if(!email){
-    //   this.utilSrv.showToast("Something went wrong", 1000)
-    //   return
-    // }
     console.log(obj)
     const url = environment.baseUrl + 'tasks/create?email=' + email
     return this.http.post(url, obj)
@@ -38,5 +34,15 @@ export class TaskService {
     const email = localStorage.getItem("email");
     const url = environment.baseUrl + `tasks/${taskID}/resume`
     return this.http.patch(url, {email})
+  }
+
+  deleteTask(taskID: string){
+    const email = localStorage.getItem("email");
+    const url = environment.baseUrl + `tasks/${taskID}/delete`
+    if(!email) {
+      this.utilSrv.showToast("Please login to delete task", 1000)
+      return
+    }
+    return this.http.delete(url, {params: {email}})
   }
 }

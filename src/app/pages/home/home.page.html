@@ -12,6 +12,11 @@
       <qrcode [qrdata]="clientQRCode"></qrcode>
       <p>Using Whatsapp, Scan the QRCode above to connect to the WhatScheduler client</p>
     </div>
+
+    <div *ngIf="isClientAuthenticated" class="sync-container">
+      <ion-icon name="sync-outline" class="sync-icon"></ion-icon>
+      <p>Syncing information, this may take a while...</p>
+    </div>
   </div>
 
   <div *ngIf="isClientReady && clientChats.length < 1">
