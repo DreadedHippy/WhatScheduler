@@ -1,18 +1,25 @@
 <app-header [title]="title"></app-header>
 <ion-content>
-  <ion-searchbar placeholder="Filter tasks" inputmode="search" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" showClearButton="always"></ion-searchbar>
+  <ion-searchbar
+    placeholder="Filter tasks"
+    inputmode="search"
+    type="text"
+    (ionChange)="onSearchChange($event)"
+    [debounce]="250"
+    showClearButton="always"
+  ></ion-searchbar>
   <div class="flex">
     <div class="flex-filter">
       <ion-item color="none" lines="none">
         <ion-icon slot="start" name="filter-outline"></ion-icon>
-        <ion-select value="all" placeholder="Filter">
+        <ion-select value="all" placeholder="Filter" interface="popover" (ionChange)="filterTasks($event)">
           <ion-select-option value="all">All</ion-select-option>
           <ion-select-option value="running">Running</ion-select-option>
           <ion-select-option value="stopped">Stopped</ion-select-option>
         </ion-select>
       </ion-item>
     </div>
-    <ion-button (click)="addTask()" >
+    <ion-button (click)="addTask()">
       <ion-icon slot="icon-only" name="add"></ion-icon>
     </ion-button>
   </div>
@@ -23,14 +30,23 @@
     </ion-text>
   </div>
 
-
-  <div class="list-container" *ngIf="displayedTasks.length > 0 && !isSyncing">
-    <ion-accordion-group>
+  <div *ngIf="displayedTasks.length > 0 && !isSyncing">
+    <ion-accordion-group expand="inset">
       <ion-accordion *ngFor="let task of displayedTasks">
         <ion-item slot="header">
           <ion-label>{{task.name}}</ion-label>
-          <ion-button fill="clear" [color]="task.isRunning ? 'danger' : 'success'" (click)="onClick($event, task._id, task.isRunning)">
-            <ion-label><ion-icon size="large" [name]="task.isRunning ? 'stop' : 'play'" [color]="task.isRunning ? 'danger' : 'success'"></ion-icon></ion-label>
+          <ion-button
+            fill="clear"
+            [color]="task.isRunning ? 'danger' : 'success'"
+            (click)="onClick($event, task._id, task.isRunning)"
+          >
+            <ion-label
+              ><ion-icon
+                size="large"
+                [name]="task.isRunning ? 'stop' : 'play'"
+                [color]="task.isRunning ? 'danger' : 'success'"
+              ></ion-icon
+            ></ion-label>
           </ion-button>
         </ion-item>
         <div class="accordion-content" slot="content">
@@ -42,11 +58,19 @@
           <p class="header">Chats</p>
           <div class="divider"></div>
           <div class="selected-chats-container">
-            <div *ngFor="let chatID of task.chatIDs" [ngStyle]="{'background-color': getChatInfo(chatID).isGroup ? '#22618B' : '#2374AB'}" class="selected-chat">
+            <div
+              *ngFor="let chatID of task.chatIDs"
+              [ngStyle]="{'background-color': getChatInfo(chatID).isGroup ? '#22618B' : '#2374AB'}"
+              class="selected-chat"
+            >
               <ion-label>{{getChatInfo(chatID).name}}</ion-label>
             </div>
           </div>
-          <ion-button (click)="onDelete(task._id)" expand="block" color="danger">
+          <ion-button
+            (click)="onDelete(task._id)"
+            expand="block"
+            color="danger"
+          >
             Delete
           </ion-button>
         </div>

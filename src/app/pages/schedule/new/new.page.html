@@ -6,32 +6,40 @@
       <form [formGroup]="messageForm" (ngSubmit)="onMessageSubmit()">
         <ion-item-group>
           <div class="flex">
-            <ion-icon name="chatbubble-ellipses-outline" class="title-icon" color="primary"></ion-icon>
+            <ion-icon
+              name="chatbubble-ellipses-outline"
+              class="title-icon"
+              color="primary"
+            ></ion-icon>
             <ion-text color="primary">
-              <h1>Send a message</h1>
+              <h1>Schedule a message</h1>
             </ion-text>
           </div>
 
-          <!-- <div class="chat-list">
-            <ion-searchbar placeholder="Search chats" inputmode="text" type="text" (ionChange)="onSearchChange($event)" [debounce]="250" showClearButton="always"></ion-searchbar>
-            <ion-list>
-              <ion-radio-group name="contacts" formControlName="chat">
-                <ion-item *ngFor="let chat of displayedChats" lines="full">
-                  <ion-label>{{chat.name}}</ion-label>
-                  <ion-radio [value]="chat.id._serialized"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-            </ion-list>
-          </div> -->
-
           <div class="container">
             <ion-item lines="full">
-              <ion-select [multiple]="true" placeholder="Select chat" formControlName="chatIDs">
-                <ion-select-option *ngFor="let chat of clientChats" [value]="chat.id._serialized">{{chat.name}}</ion-select-option>
+              <ion-select
+                [multiple]="true"
+                placeholder="Select chat"
+                formControlName="chatIDs"
+              >
+                <ion-select-option
+                  *ngFor="let chat of clientChats"
+                  [value]="chat.id._serialized"
+                  >{{chat.name}}</ion-select-option
+                >
               </ion-select>
             </ion-item>
-            <ion-item fill="outline" style="margin-top: 1em;">
-              <ion-textarea rows="8" enterkeyhint="send" autocapitalize="sentences" class="message-textarea" [autoGrow]="true" placeholder="Message" formControlName="message"></ion-textarea>
+            <ion-item fill="outline" style="margin-top: 1em">
+              <ion-textarea
+                rows="8"
+                enterkeyhint="send"
+                autocapitalize="sentences"
+                class="message-textarea"
+                [autoGrow]="true"
+                placeholder="Message"
+                formControlName="message"
+              ></ion-textarea>
             </ion-item>
           </div>
 
@@ -42,7 +50,10 @@
           <div class="container">
             <ion-item lines="none">
               <ion-label>Send instantly</ion-label>
-              <ion-toggle color="primary" formControlName="isInstant"></ion-toggle>
+              <ion-toggle
+                color="primary"
+                formControlName="isInstant"
+              ></ion-toggle>
             </ion-item>
           </div>
           <div [hidden]="messageForm.value.isInstant === true">
@@ -54,14 +65,23 @@
                 <ion-datetime-button datetime="datetime"></ion-datetime-button>
                 <ion-modal [keepContentsMounted]="true">
                   <ng-template>
-                    <ion-datetime [min]="minDate" id="datetime" formControlName="date"></ion-datetime>
+                    <ion-datetime
+                      [min]="minDate"
+                      id="datetime"
+                      formControlName="date"
+                    ></ion-datetime>
                   </ng-template>
                 </ion-modal>
               </ion-item>
             </div>
           </div>
 
-          <ion-button block color="primary" type="submit" [disabled]="messageForm.invalid">
+          <ion-button
+            block
+            color="primary"
+            type="submit"
+            [disabled]="messageForm.invalid"
+          >
             Submit
           </ion-button>
         </ion-item-group>

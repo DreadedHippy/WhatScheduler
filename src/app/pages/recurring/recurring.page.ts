@@ -12,106 +12,143 @@ import { Task } from 'src/app/interfaces/task';
   styleUrls: ['./recurring.page.scss'],
 })
 export class RecurringPage implements OnInit {
-  title = "Recurring";
-  tasks: Task[] = []
+  title = 'Recurring';
+  tasks: Task[] = [];
   displayedTasks: Task[] = [];
   isSyncing = false;
-  private subs = new SubSink()
+  private subs = new SubSink();
 
   constructor(
     private navCtrl: NavController,
     private taskSrv: TaskService,
     private utilSrv: UtilityService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.getTasks()
+    this.getTasks();
   }
 
-  onSearchChange(e: any){
-
+  ionViewDidEnter() {
+    this.getTasks();
   }
 
-  addTask(){
-    this.navCtrl.navigateForward("recurring/new")
+  onSearchChange(e: any) {
+    const query = e.target?.value.toLowerCase();
+    this.displayedTasks = this.tasks.filter(
+      (task) => {
+        if(task.name) return task.name.toLowerCase().indexOf(query) > -1
+        return false
+      }
+    );
+    this.displayedTasks.reverse()
   }
 
-  getTasks(){
+  addTask() {
+    this.navCtrl.navigateForward('recurring/new');
+  }
+
+  filterTasks(e: any) {
+    const filter = e.target?.value.toLowerCase();
+    console.log(filter)
+    switch(filter){
+      case "all":
+        this.displayedTasks = [...this.tasks];
+        break;
+      case "running":
+        this.displayedTasks = this.tasks.filter(task => task.isRunning);
+        break;
+      case "stopped":
+        this.displayedTasks = this.tasks.filter(task => !task.isRunning);
+        break;
+    }
+    this.displayedTasks.reverse()
+  }
+
+  getTasks() {
     this.isSyncing = true;
     this.subs.sink = this.taskSrv.getTasks().subscribe({
       next: (result: any) => {
         console.log(result);
-        this.tasks = [...result.data.tasks]
-        this.displayedTasks = [...result.data.tasks]
-        this.displayedTasks.reverse()
+        this.tasks = [...result.data.tasks];
+        this.displayedTasks = [...result.data.tasks];
+        this.displayedTasks.reverse();
       },
       error: (error: any) => {
-        console.log(error)
+        console.log(error);
       },
       complete: () => {
-        console.log("completed");
+        console.log('completed');
         this.subs.unsubscribe();
         this.isSyncing = false;
-      }
-    })
+      },
+    });
   }
 
-  getChatInfo(chatID: string){
-    return this.utilSrv.getChatInfo(chatID)
+  getChatInfo(chatID: string) {
+    return this.utilSrv.getChatInfo(chatID);
   }
 
-  onClick(event: any, taskID: string | undefined, isRunning: boolean | undefined){
-    event.stopPropagation()
-    if(!taskID){
-      this.utilSrv.showToast("Invalid Task", 1000)
-      return
+  onClick(
+    event: any,
+    taskID: string | undefined,
+    isRunning: boolean | undefined
+  ) {
+    event.stopPropagation();
+    if (!taskID) {
+      this.utilSrv.showToast('Invalid Task', 1000);
+      return;
     }
-    if (isRunning){
+    if (isRunning) {
       this.subs.sink = this.taskSrv.stopTask(taskID).subscribe({
         next: (result: any) => {
-          this.utilSrv.showToast("Recurring message stopped", 1000)
-          console.log(result)
-          this.getTasks()
-        }, error: (error: any) => {
-          console.log(error)
-        }, complete: () => {
-          console.log("completed")
-        }
-      })
-      return
+          this.utilSrv.showToast('Recurring message stopped', 1000);
+          console.log(result);
+          this.getTasks();
+        },
+        error: (error: any) => {
+          console.log(error);
+        },
+        complete: () => {
+          console.log('completed');
+        },
+      });
+      return;
     }
 
     this.subs.sink = this.taskSrv.resumeTask(taskID).subscribe({
       next: (result: any) => {
-        this.utilSrv.showToast("Recurring message resumed", 1000)
-        console.log(result)
-        this.getTasks()
-      }, error: (error: any) => {
-        console.log(error)
-      }, complete: () => {
-        console.log("completed")
-      }
-    })
-
+        this.utilSrv.showToast('Recurring message resumed', 1000);
+        console.log(result);
+        this.getTasks();
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log('completed');
+      },
+    });
   }
 
-  onDelete(taskID: string | undefined){
-    console.log("Trying to delete")
-    if(!taskID){
-      this.utilSrv.showToast("Invalid recurring message", 1000)
-      return
+  onDelete(taskID: string | undefined) {
+    console.log('Trying to delete');
+    if (!taskID) {
+      this.utilSrv.showToast('Invalid recurring message', 1000);
+      return;
     }
 
     this.subs.sink = this.taskSrv.deleteTask(taskID)?.subscribe({
       next: (result: any) => {
         console.log(result);
-        this.utilSrv.showToast("Recurring message deleted deleted", 1000)
+        this.utilSrv.showToast('Recurring message deleted deleted', 1000);
       },
-      error: (error: any) => { console.log(error)},
+      error: (error: any) => {
+        console.log(error);
+      },
       complete: () => {
-        console.log("completed")
-        this.getTasks()
-      }
-    })
+        console.log('completed');
+        this.getTasks();
+      },
+    });
   }
 }

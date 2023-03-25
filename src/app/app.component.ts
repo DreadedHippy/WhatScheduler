@@ -9,10 +9,6 @@ export class AppComponent {
     { title: 'Home', url: '/home', icon: 'home'},
     { title: 'Schedule', url: '/schedule', icon: 'alarm' },
     { title: 'Recurring', url: '/recurring', icon: 'infinite' },
-    // { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    // { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    // { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    // { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor() {}

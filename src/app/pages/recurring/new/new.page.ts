@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { SubSink } from 'subsink';
 import { UtilityService } from './../../../services/utility.service';
 import { TaskService } from './../../../services/task.service';
@@ -15,7 +16,8 @@ import { isValidCron } from 'cron-validator';
 export class NewPage implements OnInit {
   title = "New Task"
   inputType = "interval"
-  selectedInterval = "hourly"
+  selectedInterval = "hourly";
+  isCreating = false;
   clientChats: any[] = []
   displayedChats: any[] = []
   taskForm = new FormGroup({
@@ -139,7 +141,8 @@ export class NewPage implements OnInit {
   constructor(
     private msgSrv: MessagingService,
     private taskSrv: TaskService,
-    private utilSrv: UtilityService
+    private utilSrv: UtilityService,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -154,11 +157,6 @@ export class NewPage implements OnInit {
       this.displayedChats = [...this.clientChats]
 
     })
-  }
-
-  isCronValid(cronInput: any) {
-    var cronRegex = new RegExp(/^(\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])|\*\/([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])) (\*|([0-9]|1[0-9]|2[0-3])|\*\/([0-9]|1[0-9]|2[0-3])) (\*|([1-9]|1[0-9]|2[0-9]|3[0-1])|\*\/([1-9]|1[0-9]|2[0-9]|3[0-1])) (\*|([1-9]|1[0-2])|\*\/([1-9]|1[0-2])) (\*|([0-6])|\*\/([0-6]))$/);
-    return cronRegex.test(cronInput);
   }
 
   onSubmit(){
@@ -214,8 +212,14 @@ export class NewPage implements OnInit {
   }
 
   createTask(task: Task){
+    this.isCreating = true
     this.subs.sink = this.taskSrv.createTask(task).subscribe({
-      next: (result) => {console.log(result)},
+      next: (result) => {
+        console.log(result)
+        this.utilSrv.showToast("Task created successfully", 1000)
+        this.taskForm.reset()
+        this.navCtrl.navigateBack('/recurring')
+      },
       error: (error) => {console.log(error)},
       complete: () => {this.subs.unsubscribe()},
     })

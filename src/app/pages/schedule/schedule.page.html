@@ -1,20 +1,6 @@
 <app-header [title]="title"></app-header>
 <ion-content>
   <ion-progress-bar type="indeterminate" color="primary" [hidden]="!isSyncing"></ion-progress-bar>
-  <!-- <div class="flex-toolbar">
-    <ion-searchbar
-      placeholder="Search schedules"
-      inputmode="search"
-      type="text"
-      (ionChange)="onSearchChange($event)"
-      [debounce]="250"
-      showClearButton="always"
-      [animated]="true"
-    ></ion-searchbar>
-    <ion-button (click)="addSchedule()" expand="block">
-      <ion-icon slot="icon-only" name="add"></ion-icon>
-    </ion-button>
-  </div> -->
 
   <!-- Only shows once all schedules have been retrieved -->
   <div class="flex" *ngIf="!isSyncing">
@@ -41,10 +27,10 @@
     </ion-text>
   </div>
 
-  <div class="list-container" *ngIf="displayedSchedules.length > 0 && !isSyncing">
-    <ion-accordion-group>
+  <div *ngIf="displayedSchedules.length > 0 && !isSyncing">
+    <ion-accordion-group expand="inset">
       <ion-accordion *ngFor="let schedule of displayedSchedules" class="accordion">
-        <ion-item slot="header">
+        <ion-item slot="header" iconSlot="caret-down">
           <ion-label>{{toDate(schedule.date)}}</ion-label>
           <ion-chip color="primary" mode="ios" [color]="schedule.status === 'expired' ? 'danger' : schedule.status === 'sent' ? 'success': ''" [outline]="true">
             <ion-label>{{schedule.status}}</ion-label>

@@ -1,35 +1,36 @@
-.item-label-custom{
+.item-label-custom {
   margin-bottom: 1em;
   // --background: #f0f0f0;
-  ion-label{
+  ion-label {
     font-weight: 500;
   }
 }
 
-ion-input.custom-cron-input{
+ion-input.custom-cron-input {
   font-family: monospace;
   // letter-spacing: 2px;
 }
 
-.create-schedule-button{
+.create-schedule-button {
   margin: 3px auto;
 }
 
-#interval-input, #custom-input{
+#interval-input,
+#custom-input {
   margin-top: 0.5em;
   padding: 12px;
   border: 1px solid #aaaaaa;
-  border-radius: 4px
+  border-radius: 4px;
 }
 
-div.divider{
+div.divider {
   width: 100%;
   height: 1px;
   background-color: #f0f0f0;
   margin: 0.3em 0 1em;
 }
 
-.radio-items-container{
+.radio-items-container {
   display: flex;
   justify-content: space-between;
 
@@ -42,7 +43,7 @@ div.divider{
   }
 }
 
-.field-header{
+.field-header {
   font-weight: 500;
   font-size: 1.2em;
   margin-bottom: 0.5em;

@@ -15,14 +15,13 @@ div.no-schedule{
 }
 
 div.flex{
-  margin:2em 0 2em;
+  margin:0.5em 0 1em;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   max-width: 100%;
   align-items: center;
-  border-bottom: 1px solid rgb(223, 223, 223);
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 0 1em;
 
   div.flex-title{

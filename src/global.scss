@@ -25,6 +25,10 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+// Import Google fonts
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500&family=Poppins:wght@100&display=swap');
+
+
 ion-toast.custom-toast{
   text-align: center;
   font-size: 1.1rem;
@@ -55,10 +59,10 @@ div.accordion-content{
 div.textarea-container{
   border: 1.5px solid rgba(0, 0, 0, 0.32);
   border-radius: 4px;
-  padding-left: 0.8em;
+  padding: 0 0.8em;
 
   p.message{
-    color: #616161;
+    color: #000000;
   }
 }
 
@@ -86,4 +90,8 @@ div.selected-chats-container{
     color: rgb(255, 255, 255);
     width: auto;
   }
+}
+
+ion-content {
+  --background:linear-gradient(150deg, #8afdf6, #8afdf6 65%,#c7fffb 70%, #8afdf6 );
 }

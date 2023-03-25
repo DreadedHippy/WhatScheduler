@@ -1,13 +1,23 @@
-div.flex{
+div.flex {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1em;
 
-  div.flex-filter{
+  div.flex-filter {
     width: auto;
   }
 }
 
-div.no-tasks{
+div.no-tasks {
   margin: 3px auto;
+  text-align: center;
+}
+
+div.accordion-content {
+  padding: 0.5em;
+  margin: 0.5em;
+  background-color: #f3fffe;
+  border-radius: 8px;
 }
