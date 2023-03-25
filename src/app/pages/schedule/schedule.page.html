@@ -1,4 +1,4 @@
-<app-header [title]="title"></app-header>
+<app-header [title]="title" style="background-color: #8afdf6;"></app-header>
 <ion-content>
   <ion-progress-bar type="indeterminate" color="primary" [hidden]="!isSyncing"></ion-progress-bar>
 
@@ -15,7 +15,7 @@
         </ion-select>
       </ion-item>
     </div>
-    <ion-button (click)="addSchedule()" expand="block">
+    <ion-button (click)="addSchedule()" expand="block" shape="round">
       <ion-icon slot="icon-only" name="add"></ion-icon>
     </ion-button>
   </div>
@@ -29,7 +29,7 @@
 
   <div *ngIf="displayedSchedules.length > 0 && !isSyncing">
     <ion-accordion-group expand="inset">
-      <ion-accordion *ngFor="let schedule of displayedSchedules" class="accordion">
+      <ion-accordion *ngFor="let schedule of displayedSchedules; trackBy:trackItems"  toggleIcon="caret-down-outline" class="accordion">
         <ion-item slot="header" iconSlot="caret-down">
           <ion-label>{{toDate(schedule.date)}}</ion-label>
           <ion-chip color="primary" mode="ios" [color]="schedule.status === 'expired' ? 'danger' : schedule.status === 'sent' ? 'success': ''" [outline]="true">

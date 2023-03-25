@@ -1,6 +1,7 @@
 import { AuthService } from './../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSplitPane } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',

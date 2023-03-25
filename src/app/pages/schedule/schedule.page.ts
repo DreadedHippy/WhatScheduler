@@ -28,7 +28,6 @@ export class SchedulePage implements OnInit {
   private subs = new SubSink();
   constructor(
     private scheduleSrv: ScheduleService,
-    private msgSrv: MessagingService,
     private navCtrl: NavController,
     private utilSrv: UtilityService
   ) {}
@@ -70,6 +69,10 @@ export class SchedulePage implements OnInit {
 
   onDelete(scheduleID: string) {
     console.log('Working on it...');
+  }
+
+  trackItems(index: number, scheduleObject: any) {
+    return scheduleObject._id;
   }
 
   onFilterChange(event: any) {

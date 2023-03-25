@@ -1,6 +1,6 @@
-<app-header [title]="title"></app-header>
+<app-header [title]="title" style="background-color: #8afdf6;"></app-header>
 <ion-content>
-  <ion-searchbar
+  <ion-searchbar class="custom-searchbar"
     placeholder="Filter tasks"
     inputmode="search"
     type="text"
@@ -19,7 +19,7 @@
         </ion-select>
       </ion-item>
     </div>
-    <ion-button (click)="addTask()">
+    <ion-button (click)="addTask()" shape="round">
       <ion-icon slot="icon-only" name="add"></ion-icon>
     </ion-button>
   </div>
@@ -32,21 +32,20 @@
 
   <div *ngIf="displayedTasks.length > 0 && !isSyncing">
     <ion-accordion-group expand="inset">
-      <ion-accordion *ngFor="let task of displayedTasks">
+      <ion-accordion *ngFor="let task of displayedTasks; trackBy:trackItems"  toggleIcon="caret-down-outline">
         <ion-item slot="header">
           <ion-label>{{task.name}}</ion-label>
           <ion-button
-            fill="clear"
+            shape="round"
+            fill="outline"
             [color]="task.isRunning ? 'danger' : 'success'"
             (click)="onClick($event, task._id, task.isRunning)"
           >
-            <ion-label
-              ><ion-icon
-                size="large"
-                [name]="task.isRunning ? 'stop' : 'play'"
-                [color]="task.isRunning ? 'danger' : 'success'"
-              ></ion-icon
-            ></ion-label>
+            <ion-icon
+              [name]="task.isRunning ? 'stop' : 'play'"
+              [color]="task.isRunning ? 'danger' : 'success'"
+            ></ion-icon>
+            {{task.isRunning ? 'Stop' : 'Start'}}
           </ion-button>
         </ion-item>
         <div class="accordion-content" slot="content">

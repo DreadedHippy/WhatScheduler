@@ -1,3 +1,10 @@
 ion-menu-button {
   color: var(--ion-color-primary);
 }
+
+ion-header.rounded {
+  border-radius: 0 0 0.5rem 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+}
+

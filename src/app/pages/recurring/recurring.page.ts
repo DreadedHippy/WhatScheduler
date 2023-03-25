@@ -43,6 +43,10 @@ export class RecurringPage implements OnInit {
     this.displayedTasks.reverse()
   }
 
+  trackItems(index: number, taskObject: any) {
+    return taskObject._id;
+  }
+
   addTask() {
     this.navCtrl.navigateForward('recurring/new');
   }

@@ -95,3 +95,19 @@ div.selected-chats-container{
 ion-content {
   --background:linear-gradient(150deg, #8afdf6, #8afdf6 65%,#c7fffb 70%, #8afdf6 );
 }
+
+ion-searchbar.custom-searchbar {
+  // --background: #3880ff;
+  width: 98.5%;
+  margin: 0 auto;
+  --border-radius: 8px;
+  // --box-shadow: 2px;
+  // --cancel-button-color: #3880ff;
+  // --clear-button-color: #3880ff;
+  // --color: #3880ff;
+  // --icon-color: #3880ff;
+  // --placeholder-color: #3880ff;
+  // --placeholder-font-style: initial;
+  // --placeholder-font-weight: initial;
+  // --placeholder-opacity: 0.5;
+}

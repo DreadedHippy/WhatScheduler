@@ -117,3 +117,27 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+// .i-menu{
+//   /* From https://css.glass */
+//   background: rgba(255, 255, 255, 0.56);
+//   border-radius: 16px;
+//   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+//   backdrop-filter: blur(9.2px);
+//   -webkit-backdrop-filter: blur(9.2px);
+//   border: 1px solid rgba(255, 255, 255, 0.33);
+// }
+ion-menu {
+  --background: #e50707 !important;
+}
+
+ion-menu::part(backdrop) {
+  background-color: rgba(4, 69, 30, 0.5);
+}
+
+
+ion-menu::part(container) {
+  border-radius: 0 8px 8px 0;
+  box-shadow: 4px 0px 16px rgba(4, 69, 30, 0.5);
+  background: #e50707 !important;
+}
