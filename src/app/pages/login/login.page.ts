@@ -23,7 +23,6 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit(){
-    // console.log("Submitted!")
     this.authSrv.login(this.loginForm.value)
   }
 }
