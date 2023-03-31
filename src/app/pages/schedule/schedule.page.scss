@@ -1,4 +1,4 @@
-div.flex-toolbar{
+div.flex-toolbar {
   max-width: 100%;
   display: flex;
   flex-direction: row;
@@ -6,16 +6,18 @@ div.flex-toolbar{
   align-items: center;
 }
 
-div.no-schedule{
+div.no-schedule {
   text-align: center;
-  ion-text{
+
+  ion-text {
     font-size: 16rem;
   }
+
   margin: 4em auto;
 }
 
-div.flex{
-  margin:0.5em 0 1em;
+div.flex {
+  margin: 0.5em 0 1em;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -24,19 +26,102 @@ div.flex{
   justify-content: space-between;
   padding: 0 1em;
 
-  div.flex-title{
+  div.flex-title {
     padding-right: 2em;
     flex: 2;
     text-align: center;
     font-size: 1.5em;
     font-weight: 600;
-  };
+  }
 
-  div.flex-filter{
+  div.flex-filter {
     width: auto;
   }
 }
 
-ion-chip{
+div.page-navbar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 3em;
+  margin: 1em auto;
+
+  div.current-page{
+    height: 2em;
+    width: 2em;
+    background: linear-gradient(130deg, #ffffff, #f0f0f0);
+    text-align: center;
+    border-radius: 4px;
+    line-height: 2em;
+    box-shadow: 2px 3px 5px #000000;
+  }
+
+
+  ion-button.nav-button{
+    overflow: hidden;
+    height: 2em;
+    width: 2em;
+    --background: linear-gradient(130deg, #3880ff, #1353c2);
+    text-align: center;
+    --border-radius: 4px;
+    line-height: 2em;
+    box-shadow: 2px 3px 5px #000000;
+    --background-hover: linear-gradient(150deg, #4788f8, #124db2);
+    --transition: background-color 15ms linear;
+  }
+
+  ion-button.skip-button:first-of-type {
+    margin-right: auto;
+  }
+
+  ion-button.skip-button {
+    --border-radius: 4px;
+    height: 2em;
+    width: 2em;
+    box-shadow: 2px 3px 5px #000000;
+    --background: linear-gradient(130deg, #7438ff, #5f13c2);
+    --padding-bottom: 0;
+    --padding-end: 0;
+    --padding-start: 0;
+    --padding-top: 0;
+    overflow: hidden;
+  }
+
+  ion-button.skip-button:last-of-type {
+    margin-left: auto;
+  }
+}
+
+ion-chip {
   text-transform: capitalize;
 }
+
+// ion-button {
+//   --background: #3880ff;
+//   --background-activated: #3880ff;
+//   --background-activated-opacity: 1;
+//   --background-focused: #3880ff;
+//   --background-focused-opacity: 1;
+//   --background-hover: #3880ff;
+//   --background-hover-opacity: 1;
+//   --border-color: #3880ff;
+//   --border-radius: 8px;
+//   --border-style: solid;
+//   --border-width: 8px;
+//   --box-shadow: 10px 10px;
+//   --color: #ffffff;
+//   --color-activated: #ffffff;
+//   --color-focused: #ffffff;
+//   --color-hover: #ffffff;
+//   --opacity: 1;
+//   --padding-bottom: 4px;
+//   --padding-end: 4px;
+//   --padding-start: 4px;
+//   --padding-top: 4px;
+//   --ripple-color: #1e1e1e;
+//   --transition: background-color 15ms linear;
+// }

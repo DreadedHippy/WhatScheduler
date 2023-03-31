@@ -16,6 +16,12 @@ export class SchedulePage implements OnInit {
   schedules: Schedule[] = [];
   displayedSchedules: Schedule[] = [];
   scheduleType = '';
+  afterNextPage = 3
+  beforePreviousPage = 0
+  currentPage = 1
+  nextPage = 2
+  previousPage = 0;
+  finalPage = 1;
   isSyncing = true;
   timeFormat: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -33,8 +39,18 @@ export class SchedulePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.subs.sink = this.scheduleSrv.getSchedules().subscribe({
+    this.getSchedules()
+  }
+
+  getSchedules(page: number = 1) {
+    this.subs.sink = this.scheduleSrv.getSchedules(page).subscribe({
       next: (result: any) => {
+        this.afterNextPage = result.data.afterNextPage
+        this.beforePreviousPage = result.data.beforePreviousPage
+        this.currentPage = result.data.currentPage
+        this.nextPage = result.data.nextPage
+        this.previousPage = result.data.previousPage
+        this.finalPage = result.data.finalPage
         console.log(result);
         this.schedules = [...result.data.schedules];
         this.displayedSchedules = [...this.schedules];
@@ -48,6 +64,16 @@ export class SchedulePage implements OnInit {
         this.isSyncing = false;
       },
     });
+  }
+
+  onPrev(page: number){
+    console.log("Moving to page", page)
+    this.getSchedules(page)
+  }
+
+  onNext(page: number){
+    console.log("Moving to page ", page)
+    this.getSchedules(page)
   }
 
   onSearchChange(event: any) {

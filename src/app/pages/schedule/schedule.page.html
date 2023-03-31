@@ -55,5 +55,28 @@
         </div>
       </ion-accordion>
     </ion-accordion-group>
+    <div class="page-navbar">
+      <ion-button class="skip-button" (click)="onPrev(1)" [disabled]="!previousPage">
+        <ion-icon slot="icon-only" size="small" name="play-back"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onPrev(beforePreviousPage)" [hidden]="!beforePreviousPage" class="nav-button">
+        {{beforePreviousPage}}
+      </ion-button>
+      <ion-button (click)="onPrev(previousPage)" [hidden]="!previousPage" class="nav-button">
+        {{previousPage}}
+      </ion-button>
+      <div class="current-page">
+        <ion-text>{{currentPage}}</ion-text>
+      </div>
+      <ion-button (click)="onNext(nextPage)" [hidden]="!nextPage" class="nav-button">
+        {{nextPage}}
+      </ion-button>
+      <ion-button (click)="onNext(afterNextPage)" [hidden]="!afterNextPage" class="nav-button">
+        {{afterNextPage}}
+      </ion-button>
+      <ion-button class="skip-button" (click)="onNext(finalPage)" [disabled]="!nextPage">
+        <ion-icon slot="icon-only" size="small" name="play-forward"></ion-icon>
+      </ion-button>
+    </div>
   </div>
 </ion-content>
