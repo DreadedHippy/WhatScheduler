@@ -42,6 +42,10 @@ export class SchedulePage implements OnInit {
     this.getSchedules()
   }
 
+  ionViewDidEnter() {
+    this.getSchedules()
+  }
+
   getSchedules(page: number = 1) {
     this.subs.sink = this.scheduleSrv.getSchedules(page).subscribe({
       next: (result: any) => {

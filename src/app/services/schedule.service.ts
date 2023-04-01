@@ -9,7 +9,7 @@ export class ScheduleService {
 
   constructor(private http: HttpClient) { }
 
-  getSchedules( page = 1, limit = 5){
+  getSchedules( page = 1, limit = 8){
     return this.http.get(environment.baseUrl + `schedules?page=${page}&limit=${limit}`)
   }
 }

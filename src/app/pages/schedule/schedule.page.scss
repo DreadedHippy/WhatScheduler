@@ -48,7 +48,10 @@ div.page-navbar {
   justify-content: center;
   width: 80%;
   height: 3em;
-  margin: 1em auto;
+  position: absolute;
+  bottom: 8em;
+  left: 10%;
+  margin: 20px auto;
 
   div.current-page{
     height: 2em;
@@ -65,12 +68,12 @@ div.page-navbar {
     overflow: hidden;
     height: 2em;
     width: 2em;
-    --background: linear-gradient(130deg, #3880ff, #1353c2);
+    --background: linear-gradient(130deg, #3780ff, #3c6dc3);
     text-align: center;
     --border-radius: 4px;
     line-height: 2em;
     box-shadow: 2px 3px 5px #000000;
-    --background-hover: linear-gradient(150deg, #4788f8, #124db2);
+    --background-hover: linear-gradient(150deg, #3780ff, #3c6dc3);
     --transition: background-color 15ms linear;
   }
 
