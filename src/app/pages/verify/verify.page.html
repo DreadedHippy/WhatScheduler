@@ -1,0 +1,12 @@
+<ion-header>
+</ion-header>
+
+<ion-content>
+  <ion-progress-bar type="indeterminate" color="primary" [hidden]="!isSyncing"></ion-progress-bar>
+  <ion-card>
+    <ion-card-title>Verification</ion-card-title>
+    <p [hidden]="!isSyncing">Verifying...</p>
+    <ion-text color="accent" [hidden]="isSyncing">Verification complete!</ion-text>
+  </ion-card>
+
+</ion-content>

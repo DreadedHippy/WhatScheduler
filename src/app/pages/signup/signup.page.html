@@ -5,24 +5,24 @@
   <div>
     <ion-card class="centered">
       <ion-card-header>
-        <ion-card-title>LOGIN</ion-card-title>
+        <ion-card-title>SIGNUP</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
           <ion-item>
             <ion-label position="floating">E-Mail <ion-text color="danger">*</ion-text></ion-label>
-            <ion-input email required formControlName="email" type="text"></ion-input>
+            <ion-input email formControlName="email" type="email"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Password <ion-text color="danger">*</ion-text></ion-label>
-            <ion-input required formControlName="password" type="password"></ion-input>
+            <ion-input formControlName="password" type="password"></ion-input>
           </ion-item>
-          <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid">
-            Login
+          <ion-button block color="primary" type="submit" [disabled]="signupForm.invalid">
+            Sign Up
           </ion-button>
         </form>
         <br/>
-        <ion-text>New to WhatScheduler? <span class="link" (click)="gotoSignup()">Signup!</span></ion-text>
+        <ion-text>Already have an account? <span class="link" (click)="gotoLogin()">Login here!</span></ion-text>
       </ion-card-content>
     </ion-card>
   </div>

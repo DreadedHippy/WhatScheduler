@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ToastController, NavController } from '@ionic/angular';
 import { MessagingService } from './messaging.service';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +12,13 @@ export class UtilityService {
   constructor(
     private toastCtrl: ToastController,
     private msgSrv: MessagingService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router
   ) { }
 
-  // timeFormat: Intl.DateTimeFormatOptions = {
-  //   year: 'numeric',
-  //   month: 'short',
-  //   day: 'numeric',
-  //   hour: 'numeric',
-  //   minute: 'numeric',
-  //   second: 'numeric',
-  // };
+  isPaneHidden = new Subject<boolean>()
 
   /**
-   *
    * @param {string} message The message to be sent
    * @param {number} duration The duration of the message
    */

@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane contentId="main-content" #ionSplitPane>
-    <ion-menu contentId="main-content" type="overlay" class="i-menu" [swipeGesture]="true">
+    <ion-menu contentId="main-content" [hidden]="isPaneHidden" type="overlay" class="i-menu" [swipeGesture]="true">
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>WhatScheduler</ion-list-header>

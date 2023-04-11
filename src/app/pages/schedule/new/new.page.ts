@@ -5,7 +5,7 @@ import { UtilityService } from './../../../services/utility.service';
 import { MessagingService } from './../../../services/messaging.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-new',
@@ -36,8 +36,8 @@ export class NewPage implements OnInit {
 
   ngOnInit() {
     this.subs.sink = this.route.queryParams.subscribe({
-      next: (queries: any) => {
-        const chatId = queries.chatId
+      next: (queries: Params) => {
+        const chatId = queries['chatId']
         this.messageForm.controls.chatIDs.setValue([chatId])
       },
       error: (error) => {

@@ -1,18 +1,17 @@
-import { AuthService } from './../../services/auth.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit,} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.page.html',
+  styleUrls: ['./signup.page.scss'],
 })
-export class LoginPage implements OnInit {
 
-  loginForm = new FormGroup({
+export class SignupPage implements OnInit {
+  signupForm = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   })
@@ -29,7 +28,7 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit(){
-    this.authSrv.login(this.loginForm.value)
+    this.authSrv.signup(this.signupForm.value)
   }
 
   checkIfIsLoggedIn(){
@@ -39,7 +38,8 @@ export class LoginPage implements OnInit {
     }
   }
 
-  gotoSignup(){
-    this.navCtrl.navigateRoot("/signup")
+  gotoLogin(){
+    this.navCtrl.navigateRoot("/login")
   }
+
 }

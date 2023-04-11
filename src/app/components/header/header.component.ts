@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,13 @@ export class HeaderComponent implements OnInit {
   @Input() title: string = '';
   @Input() isBackBtnHidden: boolean = false;
 
-  constructor() { }
+  constructor(private authSrv: AuthService) { }
 
   ngOnInit() {}
+
+  logout(){
+    this.authSrv.logout()
+    console.log("Logging out...")
+  }
 
 }

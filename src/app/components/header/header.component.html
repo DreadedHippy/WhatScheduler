@@ -9,6 +9,12 @@
         icon="chevron-back"
       ></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" color="danger">
+        <ion-icon slot="end" name="exit"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-buttons>
     <ion-title>{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
