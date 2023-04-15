@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.authSrv.logout()
-    console.log("Logging out...")
   }
 
 }

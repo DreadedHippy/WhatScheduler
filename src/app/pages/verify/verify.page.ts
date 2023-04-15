@@ -23,7 +23,6 @@ export class VerifyPage implements OnInit {
     this.route.queryParams.subscribe({
       next:(queries: Params) => {
         const token = queries['token'];
-        console.log(token)
         this.authSrv.verifyUser(token)
       }
     })

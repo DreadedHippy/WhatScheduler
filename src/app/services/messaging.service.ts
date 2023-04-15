@@ -1,10 +1,12 @@
 import { SubSink } from 'subsink';
 import { Observable, Subject } from 'rxjs';
 import { Message } from './../interfaces/message';
-import { environment } from './../../environments/environment.prod';
+import { environment } from './../../environments/environment';
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
+import { UtilityService } from './utility.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,11 @@ export class MessagingService{
   private clientState = false
   private subs = new SubSink();
 
-  constructor( private http: HttpClient, private socket: Socket) { }
+  constructor(
+    private http: HttpClient,
+    private socket: Socket,
+    private router: Router
+    ) { }
 
   sendMessage(obj: Message){
     const email = localStorage.getItem("email")
@@ -81,7 +87,10 @@ export class MessagingService{
           this.clientState = true
           resolve(this.clientChats)
         },
-        error: (error) => {console.error(error)},
+        error: (error) => {
+          console.error(error);
+          this.router.navigate(['/home'])
+        },
         complete: () => { this.subs.unsubscribe()}
       })
     })
