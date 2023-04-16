@@ -53,7 +53,6 @@ export class RecurringPage implements OnInit {
 
   filterTasks(e: any) {
     const filter = e.target?.value.toLowerCase();
-    console.log(filter)
     switch(filter){
       case "all":
         this.displayedTasks = [...this.tasks];
@@ -72,7 +71,6 @@ export class RecurringPage implements OnInit {
     this.isSyncing = true;
     this.subs.sink = this.taskSrv.getTasks().subscribe({
       next: (result: any) => {
-        console.log(result);
         this.tasks = [...result.data.tasks];
         this.displayedTasks = [...result.data.tasks];
         this.displayedTasks.reverse();
@@ -81,7 +79,6 @@ export class RecurringPage implements OnInit {
         console.log(error);
       },
       complete: () => {
-        console.log('completed');
         this.subs.unsubscribe();
         this.isSyncing = false;
       },
@@ -106,14 +103,13 @@ export class RecurringPage implements OnInit {
       this.subs.sink = this.taskSrv.stopTask(taskID).subscribe({
         next: (result: any) => {
           this.utilSrv.showToast('Recurring message stopped', 1000);
-          console.log(result);
           this.getTasks();
         },
         error: (error: any) => {
           console.log(error);
         },
         complete: () => {
-          console.log('completed');
+          this.subs.unsubscribe();
         },
       });
       return;
@@ -122,20 +118,19 @@ export class RecurringPage implements OnInit {
     this.subs.sink = this.taskSrv.resumeTask(taskID).subscribe({
       next: (result: any) => {
         this.utilSrv.showToast('Recurring message resumed', 1000);
-        console.log(result);
         this.getTasks();
       },
       error: (error: any) => {
         console.log(error);
       },
       complete: () => {
-        console.log('completed');
+        // console.log('completed');
+        this.subs.unsubscribe();
       },
     });
   }
 
   onDelete(taskID: string | undefined) {
-    console.log('Trying to delete');
     if (!taskID) {
       this.utilSrv.showToast('Invalid recurring message', 1000);
       return;
@@ -150,7 +145,7 @@ export class RecurringPage implements OnInit {
         console.log(error);
       },
       complete: () => {
-        console.log('completed');
+        this.subs.unsubscribe();
         this.getTasks();
       },
     });

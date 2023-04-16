@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
   constructor(private utilSrv: UtilityService, private authSrv: AuthService) {
     utilSrv.isPaneHidden.subscribe({
       next: (isHidden) => {
-        console.log(isHidden)
         this.isPaneHidden = isHidden
       }
     })

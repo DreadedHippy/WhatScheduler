@@ -12,7 +12,6 @@ export class TaskService {
 
   createTask(obj: Task) {
     const email = localStorage.getItem('email');
-    console.log(obj);
     const url = environment.baseUrl + 'tasks/create?email=' + email;
     return this.http.post(url, obj);
   }

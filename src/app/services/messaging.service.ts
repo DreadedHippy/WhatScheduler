@@ -62,14 +62,6 @@ export class MessagingService{
       },
       complete: () => {this.subs.unsubscribe}
     })
-    // const url = this.baseUrl + `client/connect?clientID=${email}`
-    // this.http.get(url).subscribe({
-    //   next: (result) => {console.log(result)},
-    //   error: (error) => {console.log(error)}
-    // })
-    // return new Promise((resolve) => {
-    //   resolve(true)
-    // })
   }
 
   getClientChats(){
@@ -81,7 +73,7 @@ export class MessagingService{
         code: string
       }>(environment.baseUrl + "client/chats?email="+email).subscribe({
         next: (result) => {
-          console.log(result)
+          // console.log(result)
           this.clientChats = result.data.chats
           this.isClientReady.next(true)
           this.clientState = true

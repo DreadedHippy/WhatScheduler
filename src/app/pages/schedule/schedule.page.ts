@@ -55,7 +55,6 @@ export class SchedulePage implements OnInit {
         this.nextPage = result.data.nextPage
         this.previousPage = result.data.previousPage
         this.finalPage = result.data.finalPage
-        console.log(result);
         this.schedules = [...result.data.schedules];
         this.displayedSchedules = [...this.schedules];
         this.displayedSchedules.reverse();
@@ -71,12 +70,10 @@ export class SchedulePage implements OnInit {
   }
 
   onPrev(page: number){
-    console.log("Moving to page", page)
     this.getSchedules(page)
   }
 
   onNext(page: number){
-    console.log("Moving to page ", page)
     this.getSchedules(page)
   }
 
@@ -98,7 +95,7 @@ export class SchedulePage implements OnInit {
   }
 
   onDelete(scheduleID: string) {
-    console.log('Working on it...');
+    this.utilSrv.showToast("Working on it....", 1000);
   }
 
   trackItems(index: number, scheduleObject: any) {

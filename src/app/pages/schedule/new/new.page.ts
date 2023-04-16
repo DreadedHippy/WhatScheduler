@@ -73,7 +73,7 @@ export class NewPage implements OnInit {
       const date = new Date(this.messageForm.value.date)
 
       if((currentDate.getTime() + (3 * 60 * 1000)) > date.getTime()){
-        this.utilSrv.showToast("Please schedule at least one minute ahead", 500)
+        this.utilSrv.showToast("Please schedule at least three minutes ahead", 1000)
         return
       }
     }
@@ -88,7 +88,6 @@ export class NewPage implements OnInit {
     this.isSending = true
     this.subs.sink = this.msgSrv.sendMessage(info).subscribe({
       next: (result: any) => {
-        console.log(result)
         this.utilSrv.showToast(result.message, 800)
         this.isSending = false
         this.navCtrl.navigateBack("/schedule")
@@ -98,7 +97,7 @@ export class NewPage implements OnInit {
         this.utilSrv.showToast(error.error.message, 800)
       },
       complete: () => {
-        console.log("Response received")
+        // console.log("Response received")
       }
     })
   }
@@ -109,6 +108,6 @@ export class NewPage implements OnInit {
   }
 
   onChatsChange(event: any){
-    console.log("chats: ", event.value)
+    // console.log("chats: ", event.value)
   }
 }

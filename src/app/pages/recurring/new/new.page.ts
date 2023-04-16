@@ -215,7 +215,6 @@ export class NewPage implements OnInit {
     this.isCreating = true
     this.subs.sink = this.taskSrv.createTask(task).subscribe({
       next: (result) => {
-        console.log(result)
         this.utilSrv.showToast("Task created successfully", 1000)
         this.taskForm.reset()
         this.navCtrl.navigateBack('/recurring')
