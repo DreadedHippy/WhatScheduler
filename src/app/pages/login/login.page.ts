@@ -16,6 +16,7 @@ export class LoginPage implements OnInit {
     email: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   })
+  isLoggingIn = false
 
   constructor(
     private authSrv: AuthService,
@@ -29,7 +30,10 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit(){
-    this.authSrv.login(this.loginForm.value)
+    this.isLoggingIn = true
+    this.authSrv.login(this.loginForm.value).then( result => {
+      this.isLoggingIn = false
+    })
   }
 
   checkIfIsLoggedIn(){

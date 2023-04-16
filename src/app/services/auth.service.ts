@@ -24,33 +24,43 @@ export class AuthService {
   private tokenTimer: any;
 
   signup(data: any){
-    this.subs.sink = this.http.post(environment.baseUrl + 'auth/signup', data).subscribe({
-      next: (result: any) => {
-        this.utilSrv.showToast(result.message, 1000)
-        this.navCtrl.navigateForward("/login")
-      },
-      error: (error) => {
-        this.utilSrv.showToast(error.error.message, 1000)
-      },
-      complete: () => this.subs.unsubscribe()
+    return new Promise((resolve) => {
+      this.subs.sink = this.http.post(environment.baseUrl + 'auth/signup', data).subscribe({
+        next: (result: any) => {
+          this.utilSrv.showToast(result.message, 1000)
+          this.navCtrl.navigateForward("/login")
+        },
+        error: (error) => {
+          this.utilSrv.showToast(error.error.message, 1000)
+        },
+        complete: () => {
+          this.subs.unsubscribe();
+          resolve(true)
+        }
+      })
     })
   }
 
   login(data: any){
-    this.http.post(environment.baseUrl + 'auth/login', data).subscribe({
-      next: (result: any) => {
-        const now = new Date()
-        const expirationDate = new Date(now.getTime() + (result.data.expiresIn * 1000));
-        this.saveAuthData(result.data.user.email, result.data.token, expirationDate)
-        this.setAuthTimer(result.data.expiresIn)
-        this.isAuthenticated = true;
-        this.utilSrv.isPaneHidden.next(false)
-        this.navCtrl.navigateForward("/home")
-      },
-      error: (error) => {
-        this.utilSrv.showToast(error.error.message, 1000)
-      },
-      complete: () => this.subs.unsubscribe()
+    return new Promise((resolve) => {
+      this.subs.sink = this.http.post(environment.baseUrl + 'auth/login', data).subscribe({
+        next: (result: any) => {
+          const now = new Date()
+          const expirationDate = new Date(now.getTime() + (result.data.expiresIn * 1000));
+          this.saveAuthData(result.data.user.email, result.data.token, expirationDate)
+          this.setAuthTimer(result.data.expiresIn)
+          this.isAuthenticated = true;
+          this.utilSrv.isPaneHidden.next(false)
+          window.location.reload()
+        },
+        error: (error) => {
+          this.utilSrv.showToast(error.error.message, 1000)
+        },
+        complete: () => {
+          this.subs.unsubscribe()
+          resolve(true)
+        }
+      })
     })
   }
 

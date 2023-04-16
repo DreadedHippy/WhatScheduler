@@ -33,6 +33,7 @@ div.divider {
 .radio-items-container {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   > ion-item {
     flex: auto;

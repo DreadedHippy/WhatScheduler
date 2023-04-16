@@ -21,11 +21,12 @@ export class NewPage implements OnInit {
     isInstant: new FormControl(false, [Validators.required]),
     date: new FormControl('')
   })
-  clientChats: any[] = []
-  displayedChats: any[] = []
-  chat: any = null
-  minDate = new Date().toISOString()
-  private subs = new SubSink()
+  clientChats: any[] = [];
+  displayedChats: any[] = [];
+  chat: any = null;
+  minDate = new Date().toISOString();
+  isSending = false;
+  private subs = new SubSink();
 
   constructor(
     private msgSrv: MessagingService,
@@ -71,7 +72,7 @@ export class NewPage implements OnInit {
       const currentDate = new Date()
       const date = new Date(this.messageForm.value.date)
 
-      if((currentDate.getTime() + (1 * 60 * 1000)) > date.getTime()){
+      if((currentDate.getTime() + (3 * 60 * 1000)) > date.getTime()){
         this.utilSrv.showToast("Please schedule at least one minute ahead", 500)
         return
       }
@@ -84,10 +85,12 @@ export class NewPage implements OnInit {
       date: this.messageForm.value.date
     }
 
+    this.isSending = true
     this.subs.sink = this.msgSrv.sendMessage(info).subscribe({
       next: (result: any) => {
         console.log(result)
         this.utilSrv.showToast(result.message, 800)
+        this.isSending = false
         this.navCtrl.navigateBack("/schedule")
       },
       error: (error: any) => {

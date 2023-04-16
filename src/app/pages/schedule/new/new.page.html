@@ -80,9 +80,10 @@
             block
             color="primary"
             type="submit"
-            [disabled]="messageForm.invalid"
+            [disabled]="messageForm.invalid || isSending"
           >
-            Submit
+            <ion-label *ngIf="!isSending">Send</ion-label>
+            <ion-spinner *ngIf="isSending" type="circular"></ion-spinner>
           </ion-button>
         </ion-item-group>
       </form>

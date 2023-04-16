@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://whatscheduler-backend.azurewebsites.net/api/',
-  baseSocketUrl: 'https://whatscheduler-backend.azurewebsites.net'
+  baseUrl: 'http://localhost:8080/api/',
+  baseSocketUrl: 'http://localhost:8080'
 };
 
 /*

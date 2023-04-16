@@ -15,6 +15,7 @@ export class SignupPage implements OnInit {
     email: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   })
+  isSigningUp = false
 
   constructor(
     private authSrv: AuthService,
@@ -28,7 +29,10 @@ export class SignupPage implements OnInit {
   }
 
   onSubmit(){
-    this.authSrv.signup(this.signupForm.value)
+    this.isSigningUp = true
+    this.authSrv.signup(this.signupForm.value).then(result => {
+      this.isSigningUp = false
+    })
   }
 
   checkIfIsLoggedIn(){
