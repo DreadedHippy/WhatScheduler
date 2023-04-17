@@ -11,6 +11,31 @@
       <ion-spinner name="crescent" *ngIf="isClientLoading"></ion-spinner>
     </ion-button>
 
+    <ion-card *ngIf="!isButtonDisabled">
+      <ion-card-header style="border-bottom: 1px solid #f0f0f0;">
+        <ion-card-title>Disclaimers</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ul class="ion-text-left">
+          <li>
+            <ion-text color="danger">
+              <strong>This app is not affiliated with Whatsapp in any way</strong>
+            </ion-text>
+          </li>
+          <li>
+            <ion-text color="danger">
+              <strong>We do not store any of your data</strong>
+            </ion-text>
+          </li>
+          <li>
+            <ion-text color="danger">
+              <strong>We do not have access to your chats</strong>
+            </ion-text>
+          </li>
+        </ul>
+      </ion-card-content>
+    </ion-card>
+
     <div *ngIf="isQRCodeReceived">
       <qrcode [qrdata]="clientQRCode"></qrcode>
       <p>

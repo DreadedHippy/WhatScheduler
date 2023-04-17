@@ -8,3 +8,6 @@ ion-header.rounded {
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
 }
 
+ion-button.logout-button {
+  --border-radius: 6px !important;
+}

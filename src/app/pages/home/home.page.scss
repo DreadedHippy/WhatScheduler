@@ -64,3 +64,18 @@ div.flex{
     transform: rotate(360deg);
   }
 }
+
+.disclaimer-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: start;
+
+  ion-icon {
+    margin-right: 0.5em;
+  }
+}
+
+.disclaimer-text {
+  font-size: 1.2em;
+}
