@@ -124,7 +124,6 @@ export class RecurringPage implements OnInit {
         console.log(error);
       },
       complete: () => {
-        // console.log('completed');
         this.subs.unsubscribe();
       },
     });

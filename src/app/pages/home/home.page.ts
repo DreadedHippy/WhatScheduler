@@ -63,7 +63,6 @@ export class HomePage implements OnInit {
   onConnect(){
     this.isButtonDisabled = true
     this.isClientLoading = true
-    // this.msgSrv.pingSocket()
     this.msgSrv.connectClient();
   }
 
