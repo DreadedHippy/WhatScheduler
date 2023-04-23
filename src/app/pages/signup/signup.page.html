@@ -9,15 +9,15 @@
       </ion-card-header>
       <ion-card-content>
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-          <ion-item>
-            <ion-label position="floating">E-Mail <ion-text color="danger">*</ion-text></ion-label>
-            <ion-input email formControlName="email" type="email"></ion-input>
+          <ion-item lines="none">
+            <ion-input email formControlName="email" type="email" placeholder="Email"></ion-input>
+            <ion-note slot="error">Enter a valid email</ion-note>
           </ion-item>
-          <ion-item>
-            <ion-label position="floating">Password <ion-text color="danger">*</ion-text></ion-label>
-            <ion-input formControlName="password" type="password"></ion-input>
+          <ion-item lines="none">
+            <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+            <ion-note slot="error">Input at least 8 chars.</ion-note>
           </ion-item>
-          <ion-button block color="primary" type="submit" [disabled]="signupForm.invalid || isSigningUp">
+          <ion-button color="primary" type="submit" [disabled]="signupForm.invalid || isSigningUp">
             <ion-label *ngIf="!isSigningUp">Sign Up</ion-label>
             <ion-spinner name="circular" *ngIf="isSigningUp"></ion-spinner>
           </ion-button>

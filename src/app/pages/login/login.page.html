@@ -2,29 +2,28 @@
 </ion-header>
 
 <ion-content>
-  <div>
-    <ion-card class="centered">
-      <ion-card-header>
-        <ion-card-title>LOGIN</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <ion-item>
-            <ion-label position="floating">E-Mail <ion-text color="danger">*</ion-text></ion-label>
-            <ion-input email required formControlName="email" type="text"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Password <ion-text color="danger">*</ion-text></ion-label>
-            <ion-input required formControlName="password" type="password"></ion-input>
-          </ion-item>
-          <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid || isLoggingIn">
-            <ion-label *ngIf="!isLoggingIn">Login</ion-label>
-            <ion-spinner name="circular" *ngIf="isLoggingIn"></ion-spinner>
-          </ion-button>
-        </form>
-        <br/>
-        <ion-text>New to WhatScheduler? <span class="link" (click)="gotoSignup()">Signup!</span></ion-text>
-      </ion-card-content>
-    </ion-card>
-  </div>
+  <ion-card class="centered">
+    <ion-card-header>
+      <ion-card-title>LOGIN</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <ion-item lines="none">
+          <ion-input email required formControlName="email" type="text" placeholder="Email"></ion-input>
+          <ion-note slot="error">Enter a valid email</ion-note>
+        </ion-item>
+        <!-- <br/> -->
+        <ion-item lines="none">
+          <ion-input required formControlName="password" type="password" placeholder="Password"></ion-input>
+          <ion-note slot="error">Password must be 8 chars. or more</ion-note>
+        </ion-item>
+        <ion-button block color="primary" type="submit" [disabled]="loginForm.invalid || isLoggingIn">
+          <ion-label *ngIf="!isLoggingIn">Login</ion-label>
+          <ion-spinner name="circular" *ngIf="isLoggingIn"></ion-spinner>
+        </ion-button>
+      </form>
+      <br/>
+      <ion-text>New to WhatScheduler? <span class="link" (click)="gotoSignup()">Signup!</span></ion-text>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

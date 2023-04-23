@@ -6,8 +6,61 @@
   text-align: center;
 }
 
+ion-card {
+  border-radius: 24px;
+}
+
 .link {
   color: #007bff;
   text-decoration: underline;
   cursor: pointer;
+}
+
+
+ion-card-header {
+  border-bottom: 1px solid rgba(106, 106, 106, 0.587);
+  margin-bottom: 16px;
+
+  ion-card-title {
+    font-weight: 500;
+  }
+}
+
+ion-item {
+  margin-bottom: 12px;
+
+  ion-input {
+    --background: linear-gradient(70deg, #3dffe21a, #a5d8ff22);
+    --placeholder-color: #7c7c7c;
+    --placeholder-font-style: initial;
+    --placeholder-font-weight: initial;
+    --placeholder-opacity: 0.5;
+    border-radius: 24px;
+    padding: 0 2px 0 16px !important;
+    border: 1px solid rgba(79, 79, 79, 0.63);
+    overflow: hidden;
+  }
+
+  ion-note[slot="error"] {
+    padding-top: 0 !important;
+    padding-left: 16px;
+    animation: smoothShow 0.5s ease-in-out 0s 1 forwards;
+  }
+
+}
+
+
+ion-button {
+  margin-top: 1.5rem;
+}
+
+@keyframes smoothShow {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -29,13 +29,14 @@ export class AuthService {
         next: (result: any) => {
           this.utilSrv.showToast(result.message, 1000)
           this.navCtrl.navigateForward("/login")
+          resolve(true)
         },
         error: (error) => {
           this.utilSrv.showToast(error.error.message, 1000)
+          resolve(true)
         },
         complete: () => {
           this.subs.unsubscribe();
-          resolve(true)
         }
       })
     })
@@ -52,13 +53,14 @@ export class AuthService {
           this.isAuthenticated = true;
           this.utilSrv.isPaneHidden.next(false)
           window.location.reload()
+          resolve(true)
         },
         error: (error) => {
           this.utilSrv.showToast(error.error.message, 1000)
+          resolve(true)
         },
         complete: () => {
-          this.subs.unsubscribe()
-          resolve(true)
+          this.subs.unsubscribe();
         }
       })
     })
