@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -11,6 +12,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 
 export class SignupPage implements OnInit {
+  googleRedirectUri = environment.googleRedirectUri;
   signupForm = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)])

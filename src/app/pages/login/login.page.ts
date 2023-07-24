@@ -4,6 +4,7 @@ import { Component, OnInit,} from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { UtilityService } from 'src/app/services/utility.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  googleRedirectUri = environment.googleRedirectUri;
 
   loginForm = new FormGroup({
     email: new FormControl('', Validators.required),
