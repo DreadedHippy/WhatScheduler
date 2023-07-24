@@ -3,6 +3,7 @@
 #### [Contributors](CONTRIBUTORS.md)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/DreadedHippy/whatScheduler_server?color=%23ffbb00&logo=Github&logoColor=%23ff&style=for-the-badge)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/DreadedHippy/whatScheduler_server?color=%23ff9548&logo=Github&logoColor=%23ffdd00&style=for-the-badge)
 ![Repo Views](https://vbr.wocr.tk/badge?page_id=DreadedHippy.whatScheduler&text=views&color=4EC820&logo=Github)
 
 <p>
