@@ -37,6 +37,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/verify/verify.module').then( m => m.VerifyPageModule)
   },
   {
+    path: 'gauthcallback',
+    loadChildren: () => import('./pages/gauthcallback/gauthcallback.module').then( m => m.GauthcallbackPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
     canActivate: [AuthGuard]

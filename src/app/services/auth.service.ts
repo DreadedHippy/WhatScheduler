@@ -27,7 +27,8 @@ export class AuthService {
     return new Promise((resolve) => {
       this.subs.sink = this.http.post(environment.baseUrl + 'auth/signup', data).subscribe({
         next: (result: any) => {
-          this.utilSrv.showToast(result.message, 1000)
+          // this.utilSrv.showToast(result.message, 1000)
+          this.utilSrv.showToast("User created, please log in with your credentials", 1000)
           this.navCtrl.navigateForward("/login")
           resolve(true)
         },
@@ -63,6 +64,27 @@ export class AuthService {
           this.subs.unsubscribe();
         }
       })
+    })
+  }
+
+  googleAuth(code: string) {
+    this.subs.sink = this.http.post(environment.baseUrl + 'auth/googleAuth', {code}).subscribe({
+      next: (result: any) => {
+        const now = new Date()
+        const expirationDate = new Date(now.getTime() + (result.data.expiresIn * 1000));
+        this.saveAuthData(result.data.user.email, result.data.token, expirationDate)
+        this.setAuthTimer(result.data.expiresIn)
+        this.isAuthenticated = true;
+        this.utilSrv.isPaneHidden.next(false)
+        window.location.reload()
+      },
+      error: (error) => {
+        this.utilSrv.showToast(error.error.message, 1000)
+        this.navCtrl.navigateRoot("/login")
+      },
+      complete: () => {
+        this.subs.unsubscribe();
+      }
     })
   }
 
